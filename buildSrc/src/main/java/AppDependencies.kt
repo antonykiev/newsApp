@@ -43,6 +43,16 @@ object AppDependencies {
         const val composeNavigation = "androidx.navigation:navigation-compose:${composeNavigationVersion}"
     }
 
+    object Retrofit {
+        private const val retrofitVersion = "2.9.0"
+        private const val okHttpVersion = "4.9.1"
+
+        const val retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
+        const val gsonConverter = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+        const val okHttp = "com.squareup.okhttp3:okhttp:$okHttpVersion"
+        const val interceptor = "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    }
+
     object Test {
         const val androidxJunit = "androidx.test.ext:junit:${Versions.junitVersion}"
         const val junit = "junit:junit:${Versions.junit}"

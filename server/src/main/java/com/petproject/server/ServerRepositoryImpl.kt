@@ -7,9 +7,7 @@ class ServerRepositoryImpl(
     private val dataSource: EverythingDataSource,
 ) : ServerRepository {
 
-    override suspend fun everything(): Result<EverythingResponse> {
-        return runCatching {
-            dataSource.everything()
-        }
+    override suspend fun everything(keyword: String): Result<EverythingResponse> {
+        return dataSource.everything(keyword)
     }
 }

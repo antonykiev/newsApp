@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
 
     implementation(project(":core"))
+    implementation(project(":server"))
 
     debugImplementation(libs.composeUiTooling)
     debugImplementation(libs.androidx.ui.test.manifest)

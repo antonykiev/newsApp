@@ -1,8 +1,13 @@
-import dependency.Android
+import dependency.Hilt
+import dependency.Project
+import dependency.Retrofit
+import dependency.Test
 
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    id(Plugins.androidLibrary)
+    id(Plugins.kotlinAndtoid)
+    id(Plugins.kotlinKapt)
+    id(Plugins.hilt)
 }
 
 android {
@@ -34,11 +39,13 @@ android {
     }
 }
 
-dependencies {
+kapt {
+    correctErrorTypes = true
+}
 
-    Android()
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+dependencies {
+    Hilt()
+    Retrofit()
+    Project(":core")
+    Test()
 }
