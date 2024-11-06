@@ -1,9 +1,9 @@
 package com.petproject.server
 
-import com.petproject.server.response.EverythingResponse
+import com.petproject.data.Everything
 
 interface ServerRepository {
     suspend fun everything(
         keyword: String,
-    ): Result<EverythingResponse>
+    ): Result<Everything>
 }

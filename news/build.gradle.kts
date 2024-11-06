@@ -59,6 +59,9 @@ dependencies {
     kapt(libs.hilt.android.compiler)
     implementation(libs.hilt.navigation.compose)
 
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
+
     implementation(project(":core"))
     implementation(project(":server"))
 

@@ -1,14 +1,17 @@
 package com.petproject.server.source
 
-import com.petproject.server.api.Everything
+import com.petproject.data.Everything
+import com.petproject.mappers.EverythingResponseToEverythingMapper
+import com.petproject.server.api.EverythingApi
 import com.petproject.server.response.EverythingResponse
-import retrofit2.http.Field
 
-class EverythingDataSource(private val api: Everything) {
+class EverythingDataSource(private val api: EverythingApi) {
 
-    suspend fun everything(keyword: String,): Result<EverythingResponse> {
+    suspend fun everything(keyword: String,): Result<Everything> {
         return runCatching {
-            api.everything(keyword)
+            EverythingResponseToEverythingMapper(
+                response = api.everything(keyword)
+            ).everything()
         }
     }
 }

@@ -1,11 +1,11 @@
-package com.petproject.server.response
+package com.petproject.data
 
-data class ArticleResponse(
+data class Article(
     val author: String?,
     val content: String,
     val description: String,
     val publishedAt: String,
-    val source: SourceResponse,
+    val source: Source,
     val title: String,
     val url: String,
     val urlToImage: String?,
