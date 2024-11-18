@@ -1,6 +1,6 @@
-package com.petproject.mappers
+package com.petproject.core.mappers
 
-import com.petproject.data.Article
+import com.petproject.core.data.Article
 import com.petproject.server.response.ArticleResponse
 
 class ArticleResponseToArticleMapper(
@@ -10,7 +10,7 @@ class ArticleResponseToArticleMapper(
         return Article(
             author = response.author,
             content = response.content,
-            description = response.description,
+            description = response.description.orEmpty(),
             publishedAt = response.publishedAt,
             source = SourceResponseToSourceMapper(
                 response = response.source,

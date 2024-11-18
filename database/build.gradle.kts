@@ -1,5 +1,6 @@
+import dependency.Core
 import dependency.Hilt
-import dependency.Project
+import dependency.Test
 
 plugins {
     id(Plugins.androidLibrary)
@@ -9,7 +10,7 @@ plugins {
 }
 
 android {
-    namespace = "com.petproject.core"
+    namespace = "com.pet.database"
     compileSdk = 34
 
     defaultConfig {
@@ -38,10 +39,10 @@ android {
 }
 
 dependencies {
-    Project(":server")
-    Project(":database")
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.gson)
     Hilt()
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    Test()
 }

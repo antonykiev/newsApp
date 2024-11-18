@@ -1,6 +1,6 @@
-package com.petproject.mappers
+package com.petproject.core.mappers
 
-import com.petproject.data.Everything
+import com.petproject.core.data.Everything
 import com.petproject.server.response.EverythingResponse
 
 class EverythingResponseToEverythingMapper(

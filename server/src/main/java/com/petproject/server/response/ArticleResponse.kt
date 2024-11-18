@@ -3,7 +3,7 @@ package com.petproject.server.response
 data class ArticleResponse(
     val author: String?,
     val content: String,
-    val description: String,
+    val description: String?,
     val publishedAt: String,
     val source: SourceResponse,
     val title: String,

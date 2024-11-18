@@ -1,5 +1,4 @@
 import dependency.Hilt
-import dependency.Project
 import dependency.Retrofit
 import dependency.Test
 
@@ -46,6 +45,5 @@ kapt {
 dependencies {
     Hilt()
     Retrofit()
-    Project(":core")
     Test()
 }

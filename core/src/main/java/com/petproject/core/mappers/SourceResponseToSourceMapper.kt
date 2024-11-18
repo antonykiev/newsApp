@@ -1,6 +1,6 @@
-package com.petproject.mappers
+package com.petproject.core.mappers
 
-import com.petproject.data.Source
+import com.petproject.core.data.Source
 import com.petproject.server.response.SourceResponse
 
 class SourceResponseToSourceMapper(

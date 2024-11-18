@@ -27,3 +27,4 @@ include(
     ":core",
     ":server"
 )
+include(":database")

@@ -1,4 +1,4 @@
-package com.petproject.data
+package com.petproject.core.data
 
 data class Source(
     val id: String?,

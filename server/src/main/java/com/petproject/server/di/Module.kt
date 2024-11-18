@@ -1,16 +1,12 @@
 package com.petproject.server.di
 
-import com.petproject.server.ServerRepository
-import com.petproject.server.ServerRepositoryImpl
 import com.petproject.server.api.RemoteApi
-import com.petproject.server.source.EverythingDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object Module {
+class Module {
 
     @Provides
     @Singleton
@@ -45,15 +41,5 @@ object Module {
         .build()
         .create(RemoteApi::class.java)
 
-    @Provides
-    @Singleton
-    fun providesEverythingDataSource(remoteApi: RemoteApi): EverythingDataSource {
-        return EverythingDataSource(remoteApi)
-    }
 
-    @Provides
-    @Singleton
-    fun providesServerRepository(everythingDataSource: EverythingDataSource): ServerRepository {
-        return ServerRepositoryImpl(everythingDataSource)
-    }
 }

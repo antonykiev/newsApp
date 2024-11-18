@@ -1,5 +1,6 @@
 package com.petproject.news.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -26,9 +27,16 @@ private val ICON_SIZE = 84.dp
 private val IMAGE_CORNER_RADIUS = ICON_SIZE / 2
 
 @Composable
-fun NewsItem(item: NewsPresentation) {
+fun NewsItem(
+    item: NewsPresentation,
+    onItemClick: (NewsPresentation) -> Unit = {},
+) {
     Row(
-        modifier = Modifier.padding(12.dp),
+        modifier = Modifier
+            //.padding(12.dp)
+            .clickable {
+                onItemClick(item)
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(

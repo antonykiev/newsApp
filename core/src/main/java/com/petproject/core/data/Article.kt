@@ -1,4 +1,4 @@
-package com.petproject.data
+package com.petproject.core.data
 
 data class Article(
     val author: String?,

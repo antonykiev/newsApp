@@ -2,7 +2,6 @@ package com.petproject.news.ui.screenstate
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
@@ -21,12 +20,7 @@ data class Loaded(override val args: StateArgs.LoadedArgs) : NewsScreenState(arg
                 key = { it.title }
             ) { item ->
                 NewsItem(item)
-                HorizontalDivider(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    color = Color.Gray,
-                    thickness = 1.dp
-                )
+                HorizontalDivider(color = Color.Gray, thickness = 1.dp)
             }
         }
     }

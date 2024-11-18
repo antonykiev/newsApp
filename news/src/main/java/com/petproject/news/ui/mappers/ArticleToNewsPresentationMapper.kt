@@ -1,6 +1,6 @@
 package com.petproject.news.ui.mappers
 
-import com.petproject.data.Article
+import com.petproject.core.data.Article
 import com.petproject.news.ui.data.NewsPresentation
 import java.text.SimpleDateFormat
 import java.util.Locale

@@ -1,4 +1,4 @@
-package com.petproject.data
+package com.petproject.core.data
 
 data class Everything(
     val status: String,

@@ -8,9 +8,8 @@ import com.petproject.news.ui.screenstate.Loaded
 import com.petproject.news.ui.screenstate.Loading
 import com.petproject.news.ui.screenstate.NewsScreenState
 import com.petproject.news.ui.screenstate.StateArgs
-import com.petproject.server.ServerRepository
+import com.petproject.core.repository.ArticleRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NewsViewModel @Inject constructor(
-    private val serverRepository: ServerRepository,
+    private val serverRepository: ArticleRepository,
 ) : ViewModel() {
 
     private val initialState = Loading(StateArgs.LoadingArgs)
