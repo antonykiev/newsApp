@@ -7,7 +7,7 @@ class SourceResponseToSourceMapper(
     private val response: SourceResponse,
 ) {
     fun source(): Source {
-        return Source(
+        return Source.Data(
             id = response.id,
             name = response.name,
         )

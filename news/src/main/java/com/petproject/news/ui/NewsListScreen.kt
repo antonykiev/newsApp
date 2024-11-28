@@ -1,10 +1,9 @@
 package com.petproject.news.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.petproject.news.NewsViewModel
 
 @Composable
@@ -18,7 +17,7 @@ fun NewsListScreen(
         .value
         .Handle()
 
-    SideEffect {
+    LaunchedEffect(Unit) {
         viewModel.loadInitialState()
     }
 }

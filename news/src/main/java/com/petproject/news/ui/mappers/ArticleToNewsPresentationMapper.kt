@@ -12,9 +12,9 @@ class ArticleToNewsPresentationMapper(
     fun newsPresentation(): NewsPresentation {
         return NewsPresentation(
             id = article.publishedAt,
-            imageUrl = article.urlToImage.orEmpty(),
+            imageUrl = article.urlToImage,
             title = article.title,
-            author = article.author.orEmpty(),
+            author = article.author,
             date = formatIsoTimestamp(article.publishedAt),
             url = article.url,
         )

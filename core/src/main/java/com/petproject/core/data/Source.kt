@@ -1,6 +1,11 @@
 package com.petproject.core.data
 
-data class Source(
-    val id: String?,
-    val name: String
-)
+sealed interface Source {
+    data class Data(
+        val id: String?,
+        val name: String
+    ): Source
+
+    data object Empty: Source
+}
+

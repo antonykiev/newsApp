@@ -8,11 +8,13 @@ class ArticleLocalDataSourceImpl(
     private val articleDao: ArticleDao,
 ) : ArticleLocalDataSource {
 
-    suspend fun insertArticles(articles: List<ArticleEntity>) {
-        articleDao.insert(articles)
+    override suspend fun insertArticles(listArticleEntity: List<ArticleEntity>) {
+        articleDao.insert(listArticleEntity)
     }
 
     override suspend fun everything(keyword: String): Result<List<ArticleEntity>> {
-        TODO("Not yet implemented")
+        return runCatching {
+            articleDao.getAllArticles()
+        }
     }
 }

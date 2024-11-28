@@ -8,6 +8,7 @@ fun DependencyHandler.Compose() {
     implementation(AppDependencies.Compose.composeActivity)
     implementation(platform(AppDependencies.Compose.composeBom))
     implementation(AppDependencies.Compose.composeUi)
+    //implementation(AppDependencies.Compose.composeCompiler)
     implementation(AppDependencies.Compose.composeUiGraphics)
     implementation(AppDependencies.Compose.composeUiToolingPreview)
     implementation(AppDependencies.Compose.composeMaterial3)

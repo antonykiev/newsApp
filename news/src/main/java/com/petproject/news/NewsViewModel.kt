@@ -26,29 +26,22 @@ class NewsViewModel @Inject constructor(
     private val _state = MutableStateFlow<NewsScreenState>(initialState)
     val state: StateFlow<NewsScreenState> = _state.asStateFlow()
 
-    private var isLoaded = AtomicBoolean(false)
-
     fun loadInitialState() {
-        if (isLoaded.get()) return
-
         viewModelScope.launch {
-            _state.value = loadArticles()
-            isLoaded.set(true)
-        }
-    }
-
-    private suspend fun loadArticles(): NewsScreenState {
-        val response = serverRepository.everything("bitcoin")
-        return response.fold(
-            onSuccess = {
-                val news = it.articles.map {
-                    ArticleToNewsPresentationMapper(it).newsPresentation()
+            serverRepository.everything("bitcoin")
+                .collect { result ->
+                    _state.value = result.fold(
+                        onSuccess = {
+                            val news = it.map {
+                                ArticleToNewsPresentationMapper(it).newsPresentation()
+                            }
+                            Loaded(StateArgs.LoadedArgs(news))
+                        },
+                        onFailure = {
+                            ErrorLoading(StateArgs.ErrorLoadingArgs(it))
+                        }
+                    )
                 }
-                Loaded(StateArgs.LoadedArgs(news))
-            },
-            onFailure = {
-                ErrorLoading(StateArgs.ErrorLoadingArgs(it))
-            }
-        )
+        }
     }
 }

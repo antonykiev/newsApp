@@ -36,6 +36,7 @@ object AppDependencies {
         const val composeMaterial3 = "androidx.compose.material3:material3"
         const val composeUi = "androidx.compose.ui:ui"
         const val composeUiGraphics = "androidx.compose.ui:ui-graphics"
+        const val composeCompiler = "androidx.compose.compiler:compiler"
         const val composeUiTooling = "androidx.compose.ui:ui-tooling"
         const val composeUiToolingPreview = "androidx.compose.ui:ui-tooling-preview"
         const val composeBom = "androidx.compose:compose-bom:${composeBomVersion}"

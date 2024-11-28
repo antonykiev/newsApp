@@ -8,7 +8,7 @@ class ArticleResponseToArticleMapper(
 ) {
     fun article(): Article {
         return Article(
-            author = response.author,
+            author = response.author.orEmpty(),
             content = response.content,
             description = response.description.orEmpty(),
             publishedAt = response.publishedAt,
@@ -17,7 +17,7 @@ class ArticleResponseToArticleMapper(
             ).source(),
             title = response.title,
             url = response.url,
-            urlToImage = response.urlToImage,
+            urlToImage = response.urlToImage.orEmpty(),
         )
     }
 }
