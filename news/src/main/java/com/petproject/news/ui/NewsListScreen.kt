@@ -49,6 +49,7 @@ fun NewsListScreen(
                 }
             }
         }
+
         NewsScreenState.Loading -> {
             Column(
                 modifier = Modifier.fillMaxSize(),
