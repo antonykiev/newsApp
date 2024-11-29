@@ -32,6 +32,12 @@ object AppDependencies {
         private const val composeBomVersion = "2024.08.00"
         private const val activityComposeVersion = "1.9.1"
         private const val composeNavigationVersion = "2.8.0"
+        private const val composeLiveCycle = "2.8.7"
+
+
+
+        const val composeRuntime = "androidx.compose.runtime:runtime:${composeLiveCycle}"
+        const val composeViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:${composeLiveCycle}"
 
         const val composeMaterial3 = "androidx.compose.material3:material3"
         const val composeUi = "androidx.compose.ui:ui"

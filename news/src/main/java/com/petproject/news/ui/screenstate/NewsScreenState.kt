@@ -1,12 +1,18 @@
 package com.petproject.news.ui.screenstate
 
-import androidx.compose.runtime.Composable
+import com.petproject.news.ui.data.NewsPresentation
 
 
-sealed class NewsScreenState(
-    open val args: StateArgs,
-) {
+sealed interface NewsScreenState {
 
-    @Composable
-    abstract fun Handle()
+    data class ErrorLoading(
+        val throwable: Throwable,
+    ) : NewsScreenState
+
+    data object Loading : NewsScreenState
+
+    data class Loaded(
+        val news: List<NewsPresentation>,
+    ) : NewsScreenState
+
 }
