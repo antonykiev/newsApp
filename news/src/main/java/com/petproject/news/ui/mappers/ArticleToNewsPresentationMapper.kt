@@ -6,10 +6,9 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
-class ArticleToNewsPresentationMapper(
-    private val article: Article,
-) {
-    fun newsPresentation(): NewsPresentation {
+object ArticleToNewsPresentationMapper {
+
+    fun newsPresentation(article: Article): NewsPresentation {
         return NewsPresentation(
             id = article.publishedAt,
             imageUrl = article.urlToImage,

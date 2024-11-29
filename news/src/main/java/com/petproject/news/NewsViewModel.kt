@@ -2,13 +2,13 @@ package com.petproject.news
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.petproject.news.ui.mappers.ArticleToNewsPresentationMapper
 import com.petproject.news.ui.screenstate.NewsScreenState
 import com.petproject.news.usecases.ObserveArticlesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,12 +24,8 @@ class NewsViewModel @Inject constructor(
     fun loadInitialState() {
         viewModelScope.launch {
             observeArticlesUseCase.invoke()
-                .collect {
-                    val news = it.map {
-                        ArticleToNewsPresentationMapper(it).newsPresentation()
-                    }
-                    _state.value = NewsScreenState.Loaded(news)
-                }
+                .map(NewsScreenState::Loaded)
+                .collect(_state::emit)
         }
     }
 }
