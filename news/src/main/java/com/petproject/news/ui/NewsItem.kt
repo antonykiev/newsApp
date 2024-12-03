@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.petproject.news.ui.data.NewsPresentation
+import com.petproject.news.domain.data.NewsPresentation
 
 private val ICON_SIZE = 84.dp
 private val IMAGE_CORNER_RADIUS = ICON_SIZE / 2

@@ -1,4 +1,4 @@
-package com.petproject.news.ui.data
+package com.petproject.news.domain.data
 
 data class NewsPresentation(
     val id: String,

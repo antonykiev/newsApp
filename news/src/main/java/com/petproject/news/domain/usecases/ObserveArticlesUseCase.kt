@@ -1,8 +1,8 @@
-package com.petproject.news.usecases
+package com.petproject.news.domain.usecases
 
 import com.petproject.core.repository.ArticleRepository
-import com.petproject.news.ui.data.NewsPresentation
-import com.petproject.news.ui.mappers.ArticleToNewsPresentationMapper
+import com.petproject.news.domain.data.NewsPresentation
+import com.petproject.news.domain.mappers.ArticleToNewsPresentationMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.map

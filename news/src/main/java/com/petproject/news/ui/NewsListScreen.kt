@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.petproject.news.NewsViewModel
 import com.petproject.news.ui.screenstate.NewsScreenState
 
 @Composable

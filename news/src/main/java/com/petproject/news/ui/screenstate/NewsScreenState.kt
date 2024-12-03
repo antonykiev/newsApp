@@ -1,6 +1,6 @@
 package com.petproject.news.ui.screenstate
 
-import com.petproject.news.ui.data.NewsPresentation
+import com.petproject.news.domain.data.NewsPresentation
 
 
 sealed interface NewsScreenState {

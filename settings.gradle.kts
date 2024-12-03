@@ -28,3 +28,4 @@ include(
     ":server"
 )
 include(":database")
+include(":news_detailed")
