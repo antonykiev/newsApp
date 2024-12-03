@@ -50,7 +50,9 @@ fun RootNavHost() {
         startDestination = Screen.NewsList.route
     ) {
         composable(Screen.NewsList.route) {
-            NewsListScreen(onNewsClick = { news -> })
+            NewsListScreen(onNewsClick = { news ->
+
+            })
         }
     }
 }

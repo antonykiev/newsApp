@@ -21,7 +21,7 @@ import com.petproject.news.ui.screenstate.NewsScreenState
 
 @Composable
 fun NewsListScreen(
-    onNewsClick: (String) -> Unit,
+    onNewsClick: (newsUrl: String) -> Unit,
 ) {
     val viewModel = hiltViewModel<NewsViewModel>()
 
@@ -41,7 +41,7 @@ fun NewsListScreen(
                     items = screenState.news,
                     key = { it.title }
                 ) { item ->
-                    NewsItem(item)
+                    NewsItem(item, onNewsClick)
                     HorizontalDivider(
                         color = Color.Gray,
                         thickness = 1.dp
