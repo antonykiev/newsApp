@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.petproject.news.ui.screenstate.NewsScreenState
+import com.petproject.news.ui.screenstate.ScreenState
 
 @Composable
 fun NewsListScreen(
@@ -28,13 +28,13 @@ fun NewsListScreen(
         viewModel.loadInitialState()
     }
 
-    val state: NewsScreenState by viewModel.state.collectAsStateWithLifecycle()
+    val state: ScreenState by viewModel.state.collectAsStateWithLifecycle()
 
     when (val screenState = state) {
-        is NewsScreenState.ErrorLoading -> {
+        is ScreenState.ErrorLoading -> {
 
         }
-        is NewsScreenState.Loaded -> {
+        is ScreenState.Loaded -> {
             LazyColumn {
                 items(
                     items = screenState.news,
@@ -49,7 +49,7 @@ fun NewsListScreen(
             }
         }
 
-        NewsScreenState.Loading -> {
+        ScreenState.Loading -> {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,

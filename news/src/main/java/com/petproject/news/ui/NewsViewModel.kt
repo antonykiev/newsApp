@@ -2,7 +2,7 @@ package com.petproject.news.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.petproject.news.ui.screenstate.NewsScreenState
+import com.petproject.news.ui.screenstate.ScreenState
 import com.petproject.news.domain.usecases.ObserveArticlesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,14 +17,14 @@ class NewsViewModel @Inject constructor(
     private val observeArticlesUseCase: ObserveArticlesUseCase,
 ) : ViewModel() {
 
-    private val initialState = NewsScreenState.Loading
-    private val _state = MutableStateFlow<NewsScreenState>(initialState)
-    val state: StateFlow<NewsScreenState> = _state.asStateFlow()
+    private val initialState = ScreenState.Loading
+    private val _state = MutableStateFlow<ScreenState>(initialState)
+    val state: StateFlow<ScreenState> = _state.asStateFlow()
 
     fun loadInitialState() {
         viewModelScope.launch {
             observeArticlesUseCase.invoke()
-                .map(NewsScreenState::Loaded)
+                .map(ScreenState::Loaded)
                 .collect(_state::emit)
         }
     }
