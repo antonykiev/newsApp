@@ -23,7 +23,7 @@ class NewsViewModel @Inject constructor(
 
     fun loadInitialState() {
         viewModelScope.launch {
-            observeArticlesUseCase.invoke()
+            observeArticlesUseCase()
                 .map(ScreenState::Loaded)
                 .collect(_state::emit)
         }

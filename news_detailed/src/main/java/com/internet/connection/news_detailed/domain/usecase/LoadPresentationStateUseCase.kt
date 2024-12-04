@@ -10,7 +10,6 @@ import javax.inject.Inject
 class LoadPresentationStateUseCase @Inject constructor(
     private val articleUseCase: ArticleUseCase,
     private val validContentUseCase: ValidContentUseCase,
-    private val contentFromHtmlUseCase: ContentFromHtmlUseCase,
 ) {
 
     suspend operator fun invoke(

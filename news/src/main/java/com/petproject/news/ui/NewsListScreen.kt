@@ -28,16 +28,16 @@ fun NewsListScreen(
         viewModel.loadInitialState()
     }
 
-    val state: ScreenState by viewModel.state.collectAsStateWithLifecycle()
+    val screenState by viewModel.state.collectAsStateWithLifecycle()
 
-    when (val screenState = state) {
+    when (val state = screenState) {
         is ScreenState.ErrorLoading -> {
 
         }
         is ScreenState.Loaded -> {
             LazyColumn {
                 items(
-                    items = screenState.news,
+                    items = state.news,
                     key = { it.title }
                 ) { item ->
                     NewsItem(item, onNewsClick)

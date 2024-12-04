@@ -62,8 +62,6 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
 
-    implementation(libs.jsoup)
-
     implementation(project(":core"))
     implementation(project(":server"))
 
