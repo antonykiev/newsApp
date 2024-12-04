@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="author">Author: %1$s</string>
+    <string name="published_at">Published at %1$s</string>
+    <string name="description">Description</string>
+</resources>

@@ -1,19 +1,30 @@
 package com.internet.connection.news_detailed.ui
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil3.compose.AsyncImage
+import com.internet.connection.news_detailed.R
 import com.internet.connection.news_detailed.domain.data.ArticlePresentation
 import com.internet.connection.news_detailed.ui.screenstate.ScreenState
 
@@ -41,7 +52,69 @@ fun LoadedStateScreen(
     state: ScreenState.Loaded,
     modifier: Modifier = Modifier
 ) {
+    Column (
+        modifier = modifier.fillMaxSize()
+    ) {
+        AsyncImage(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(260.dp),
+            model = state.news.urlToImage,
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
 
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleLarge,
+            text = state.news.title
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+        ) {
+            Text(
+                style = MaterialTheme.typography.bodyMedium,
+                text = stringResource(R.string.author, state.news.author)
+            )
+
+            Text(
+                style = MaterialTheme.typography.bodyMedium,
+                text = stringResource(R.string.published_at, state.news.publishedAt)
+            )
+        }
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.bodyMedium,
+            text = stringResource(R.string.description)
+        )
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.bodyLarge,
+            text = state.news.description
+        )
+
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp, start = 16.dp, end = 16.dp),
+            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.bodyLarge,
+            text = state.news.content
+        )
+    }
 }
 
 @Composable
@@ -83,7 +156,7 @@ fun LoadedStateScreenPreview() {
                 content = LoremIpsum(100).toString(),
                 urlToImage = "https://media.wired.com/photos/6703eb3979f13fda7f04485b/191:100/w_1280,c_limit/Satoshi-Nakamoto-biz-1341874258.jpg",
                 title = LoremIpsum(5).toString(),
-                publishedAt = "2024-10-09T01:00:00Z",
+                publishedAt = "15 March 2024",
                 url = "https://www.wired.com/story/unmasking-bitcoin-creator-satoshi-nakamoto-again/"
             )
         )
