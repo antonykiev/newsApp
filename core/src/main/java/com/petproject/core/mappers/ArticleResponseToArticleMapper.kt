@@ -8,6 +8,7 @@ class ArticleResponseToArticleMapper(
 ) {
     fun article(): Article {
         return Article(
+            id = response.url.hashCode().toLong(),
             author = response.author.orEmpty(),
             content = response.content,
             description = response.description.orEmpty(),

@@ -10,4 +10,7 @@ interface EverythingApi {
         @Query("q") keyword: String = "",
         @Query("page") page: Int = 1,
     ): EverythingResponse
+
+    @GET
+    fun article(url: String): String
 }

@@ -9,7 +9,7 @@ class ArticleToArticleEntityMapper(
 
     fun articleEntity(): ArticleEntity {
         return ArticleEntity(
-            id = article.url.hashCode().toLong(),
+            id = article.id,
             author = article.author,
             content = article.content,
             description = article.description,

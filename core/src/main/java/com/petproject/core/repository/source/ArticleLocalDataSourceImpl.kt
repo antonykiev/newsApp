@@ -13,6 +13,12 @@ class ArticleLocalDataSourceImpl(
         articleDao.insert(listArticleEntity)
     }
 
+    override suspend fun article(articleId: Long): Result<ArticleEntity> {
+        return runCatching {
+            articleDao.article(articleId)
+        }
+    }
+
     override fun observeArticles(keyword: String): Flow<List<ArticleEntity>> {
         return articleDao.observeArticles()
     }

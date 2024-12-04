@@ -10,7 +10,7 @@ object ArticleToNewsPresentationMapper {
 
     fun newsPresentation(article: Article): NewsPresentation {
         return NewsPresentation(
-            id = article.publishedAt,
+            id = article.id,
             imageUrl = article.urlToImage,
             title = article.title,
             author = article.author,

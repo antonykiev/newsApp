@@ -1,6 +1,8 @@
-package com.petproject.core.data
+package com.internet.connection.news_detailed.domain.data
 
-data class Article(
+import com.petproject.core.data.Source
+
+data class ArticlePresentation(
     val id: Long,
     val author: String,
     val content: String,

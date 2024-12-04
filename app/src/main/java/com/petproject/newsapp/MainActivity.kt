@@ -11,13 +11,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.internet.connection.news_detailed.ui.NewsDetailedScreen
 import com.petproject.news.ui.NewsListScreen
 import com.petproject.newsapp.navigation.Screen
 import com.petproject.newsapp.ui.theme.NewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import java.net.URLDecoder
+import java.net.URLEncoder
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -49,10 +54,21 @@ fun RootNavHost() {
         navController = navController,
         startDestination = Screen.NewsList.route
     ) {
-        composable(Screen.NewsList.route) {
-            NewsListScreen(onNewsClick = { news ->
-
+        composable(
+            route = Screen.NewsList.route
+        ) {
+            NewsListScreen(onNewsClick = { articleId ->
+                navController.navigate(Screen.NewsDetailed.navigate(articleId))
             })
+        }
+        composable(
+            route = Screen.NewsDetailed.route,
+            arguments = listOf(
+                navArgument(Screen.NewsDetailed.ARTICLE_ID_KEY) { type = NavType.LongType }
+            )
+        ) {backStackEntry ->
+            val articleId = backStackEntry.arguments?.getLong(Screen.NewsDetailed.ARTICLE_ID_KEY) ?: -1
+            NewsDetailedScreen(articleId = articleId)
         }
     }
 }

@@ -8,6 +8,7 @@ class ArticleEntityToArticleMapper(
 ) {
     fun article(): Article {
         return Article(
+            id = articleEntity.id,
             author = articleEntity.author.orEmpty(),
             content = articleEntity.content,
             description = articleEntity.description,

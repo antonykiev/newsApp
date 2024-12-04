@@ -1,17 +1,17 @@
 package com.internet.connection.news_detailed.ui.screenstate
 
-import com.internet.connection.news_detailed.domain.data.NewsPresentation
+import com.internet.connection.news_detailed.domain.data.ArticlePresentation
 
 sealed interface ScreenState {
 
-    data class ErrorLoading(
+    data class Error(
         val throwable: Throwable,
     ) : ScreenState
 
     data object Loading : ScreenState
 
     data class Loaded(
-        val news: NewsPresentation,
+        val news: ArticlePresentation,
     ) : ScreenState
 
 }

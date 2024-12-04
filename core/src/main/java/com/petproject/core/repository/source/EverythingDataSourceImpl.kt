@@ -14,4 +14,12 @@ class EverythingDataSourceImpl(private val api: EverythingApi) : ArticleRemoteDa
             Log.d("NewsViewModel", "everything ${this.onFailure { it }}")
         }
     }
+
+    override suspend fun article(url: String): Result<String> {
+        return runCatching {
+            api.article(url)
+        }.apply {
+            Log.d("NewsViewModel", "article ${this.onFailure { it }}")
+        }
+    }
 }

@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ArticleDao {
 
+    @Query("SELECT * FROM articles WHERE id = :articleId")
+    suspend fun article(articleId: Long): ArticleEntity
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(users: List<ArticleEntity>)
 

@@ -20,7 +20,7 @@ import com.petproject.news.ui.screenstate.ScreenState
 
 @Composable
 fun NewsListScreen(
-    onNewsClick: (newsUrl: String) -> Unit,
+    onNewsClick: (articleId: Long) -> Unit,
 ) {
     val viewModel = hiltViewModel<NewsViewModel>()
 

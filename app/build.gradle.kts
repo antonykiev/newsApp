@@ -63,5 +63,6 @@ dependencies {
     Hilt()
 
     Project(":news")
+    Project(":news_detailed")
     Test()
 }

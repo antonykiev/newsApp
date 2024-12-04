@@ -1,7 +1,7 @@
 package com.petproject.news.domain.data
 
 data class NewsPresentation(
-    val id: String,
+    val id: Long,
     val author: String,
     val date: String,
     val title: String,

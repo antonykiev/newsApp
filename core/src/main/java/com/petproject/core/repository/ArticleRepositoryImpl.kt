@@ -30,8 +30,20 @@ class ArticleRepositoryImpl(
         )
     }
 
+    override suspend fun article(articleId: Long): Result<Article> {
+        return dataSourceLocal.article(articleId)
+            .map {
+                ArticleEntityToArticleMapper(it)
+                    .article()
+            }
+    }
+
     override fun observeLocalArticles(keyword: String): Flow<List<Article>> {
         return dataSourceLocal.observeArticles(keyword)
             .map(ListArticleEntityToListArticleMapper::articleList)
+    }
+
+    override fun observeArticle(id: Long): Flow<Article> {
+        TODO("Not yet implemented")
     }
 }
