@@ -21,6 +21,7 @@ class ArticleRepositoryImpl(
                 EverythingResponseToEverythingMapper(it)
                     .everything()
                     .articles
+                    .filter { article -> article.author.isNotBlank() &&  article.author.isNotEmpty() }
             }
     }
 
