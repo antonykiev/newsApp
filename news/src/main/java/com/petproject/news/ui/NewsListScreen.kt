@@ -41,10 +41,10 @@ fun NewsListScreen(
                     key = { it.title }
                 ) { item ->
                     NewsItem(item, onNewsClick)
-                    HorizontalDivider(
-                        color = Color.Gray,
-                        thickness = 1.dp
-                    )
+//                    HorizontalDivider(
+//                        color = Color.Gray,
+//                        thickness = 1.dp
+//                    )
                 }
             }
         }
