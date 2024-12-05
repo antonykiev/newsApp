@@ -21,8 +21,6 @@ import com.petproject.news.ui.NewsListScreen
 import com.petproject.newsapp.navigation.Screen
 import com.petproject.newsapp.ui.theme.NewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import java.net.URLDecoder
-import java.net.URLEncoder
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -66,9 +64,13 @@ fun RootNavHost() {
             arguments = listOf(
                 navArgument(Screen.NewsDetailed.ARTICLE_ID_KEY) { type = NavType.LongType }
             )
-        ) {backStackEntry ->
-            val articleId = backStackEntry.arguments?.getLong(Screen.NewsDetailed.ARTICLE_ID_KEY) ?: -1
-            NewsDetailedScreen(articleId = articleId)
+        ) { backStackEntry ->
+            val articleId =
+                backStackEntry.arguments?.getLong(Screen.NewsDetailed.ARTICLE_ID_KEY) ?: -1
+            NewsDetailedScreen(
+                articleId = articleId,
+                onBackClick = { navController.popBackStack() }
+            )
         }
     }
 }

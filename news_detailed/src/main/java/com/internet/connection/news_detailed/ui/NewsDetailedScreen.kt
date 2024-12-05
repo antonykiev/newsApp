@@ -45,6 +45,7 @@ import com.internet.connection.news_detailed.ui.screenstate.ScreenState
 
 @Composable
 fun NewsDetailedScreen(
+    onBackClick: () -> Unit,
     articleId: Long,
 ) {
     val viewModel = hiltViewModel<NewsDetailedViewModel>()
@@ -57,7 +58,7 @@ fun NewsDetailedScreen(
 
     when (val state = screenState) {
         is ScreenState.Error -> ErrorStateScreen(state)
-        is ScreenState.Loaded -> LoadedStateScreen(state)
+        is ScreenState.Loaded -> LoadedStateScreen(state, onBackClick)
         ScreenState.Loading -> LoadingStateScreen(state)
     }
 }
@@ -65,7 +66,8 @@ fun NewsDetailedScreen(
 @Composable
 fun LoadedStateScreen(
     state: ScreenState.Loaded,
-    modifier: Modifier = Modifier
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column (
         modifier = modifier.fillMaxSize()
@@ -94,9 +96,7 @@ fun LoadedStateScreen(
                             radius = 28.dp,
                             color = Color.Gray
                         ),
-                        onClick = {
-
-                        }
+                        onClick = onBackClick
                     )
             ) {
                 Icon(
@@ -198,7 +198,7 @@ fun ErrorStateScreen(
 @Composable
 fun LoadedStateScreenPreview() {
     LoadedStateScreen(
-        ScreenState.Loaded(
+        state = ScreenState.Loaded(
             ArticlePresentation(
                 id = "id0".hashCode().toLong(),
                 author = "Joel Khalili",
@@ -209,7 +209,8 @@ fun LoadedStateScreenPreview() {
                 publishedAt = "15 March 2024",
                 url = "https://www.wired.com/story/unmasking-bitcoin-creator-satoshi-nakamoto-again/"
             )
-        )
+        ),
+        onBackClick = {}
     )
 }
 
