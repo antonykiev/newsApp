@@ -8,6 +8,7 @@ data class ArticleEntity(
     @PrimaryKey
     val id: Long,
     val author: String?,
+    val keyWords: List<String>,
     val content: String,
     val description: String,
     val publishedAt: String,

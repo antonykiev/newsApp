@@ -4,7 +4,8 @@ import com.pet.database.entity.ArticleEntity
 import com.petproject.core.data.Article
 
 class ArticleToArticleEntityMapper(
-    private val article: Article
+    private val article: Article,
+    private val keyword: String
 ) {
 
     fun articleEntity(): ArticleEntity {
@@ -17,7 +18,8 @@ class ArticleToArticleEntityMapper(
             source = SourceToSourceEntityMapper(article.source).sourceEntity(),
             title = article.title,
             url = article.url,
-            urlToImage = article.urlToImage
+            urlToImage = article.urlToImage,
+            keyWords = listOf(keyword)
         )
     }
 }

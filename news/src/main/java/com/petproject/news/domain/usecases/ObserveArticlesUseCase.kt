@@ -16,12 +16,13 @@ class ObserveArticlesUseCase @Inject constructor(
     // transform result to Result
     suspend operator fun invoke(): Flow<List<NewsPresentation>> {
         return channelFlow {
+            val keyword = "bitcoin"
             launch(Dispatchers.IO) {
-                serverRepository.remoteArticles("bitcoin")
-                    .map { serverRepository.saveLocalArticles(it) }
+                serverRepository.remoteArticles(keyword)
+                    .map { serverRepository.saveLocalArticles(it, keyword) }
             }
             launch(Dispatchers.IO) {
-                serverRepository.observeLocalArticles("bitcoin")
+                serverRepository.observeLocalArticles(keyword)
                     .map { it.map(ArticleToNewsPresentationMapper::newsPresentation) }
                     .collect(::trySend)
             }

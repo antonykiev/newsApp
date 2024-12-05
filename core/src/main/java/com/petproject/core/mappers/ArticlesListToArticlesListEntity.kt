@@ -5,10 +5,14 @@ import com.petproject.core.data.Article
 
 class ArticlesListToArticlesListEntity(
     private val articlesList: List<Article>,
+    private val keyword: String,
 ) {
     fun articlesListEntity(): List<ArticleEntity> {
         return articlesList.map {
-            ArticleToArticleEntityMapper(it).articleEntity()
+            ArticleToArticleEntityMapper(
+                article = it,
+                keyword = keyword
+            ).articleEntity()
         }
     }
 }

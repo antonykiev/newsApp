@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -70,30 +71,36 @@ fun LoadedStateScreen(
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
-            text = state.news.title
+            text = state.news.title,
+            fontWeight = FontWeight.Bold
         )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                .padding(top = 24.dp, start = 16.dp, end = 16.dp)
         ) {
             Text(
+                modifier = Modifier.weight(1f),
                 style = MaterialTheme.typography.bodyMedium,
-                text = stringResource(R.string.author, state.news.author)
+                text = stringResource(R.string.author, state.news.author),
+                fontWeight = FontWeight.Bold,
             )
 
             Text(
+                modifier = Modifier.weight(1f),
                 style = MaterialTheme.typography.bodyMedium,
-                text = stringResource(R.string.published_at, state.news.publishedAt)
+                text = stringResource(R.string.published_at, state.news.publishedAt),
+                fontWeight = FontWeight.Bold
             )
         }
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                .padding(top = 24.dp, start = 16.dp, end = 16.dp),
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold,
             text = stringResource(R.string.description)
         )
 
@@ -102,6 +109,7 @@ fun LoadedStateScreen(
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             textAlign = TextAlign.Start,
+            fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.bodyLarge,
             text = state.news.description
         )
@@ -112,6 +120,7 @@ fun LoadedStateScreen(
                 .padding(top = 24.dp, start = 16.dp, end = 16.dp),
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.Bold,
             text = state.news.content
         )
     }
@@ -130,8 +139,6 @@ fun LoadingStateScreen(
         CircularProgressIndicator()
     }
 }
-
-
 
 @Composable
 fun ErrorStateScreen(

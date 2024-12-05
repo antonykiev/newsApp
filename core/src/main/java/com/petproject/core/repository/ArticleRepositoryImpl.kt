@@ -24,9 +24,12 @@ class ArticleRepositoryImpl(
             }
     }
 
-    override suspend fun saveLocalArticles(articleList: List<Article>) {
+    override suspend fun saveLocalArticles(articleList: List<Article>, keyword: String) {
         dataSourceLocal.insertArticles(
-            ArticleListToListArticleEntityMapper(articleList).listArticleEntity()
+            ArticleListToListArticleEntityMapper(
+                articleList = articleList,
+                keyword = keyword
+            ).listArticleEntity()
         )
     }
 

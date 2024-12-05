@@ -1,7 +1,5 @@
 package com.internet.connection.news_detailed.domain.data
 
-import com.petproject.core.data.Source
-
 data class ArticlePresentation(
     val id: Long,
     val author: String,
