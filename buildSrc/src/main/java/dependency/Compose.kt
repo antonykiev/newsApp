@@ -13,5 +13,6 @@ fun DependencyHandler.Compose() {
     implementation(AppDependencies.Compose.composeUiToolingPreview)
     implementation(AppDependencies.Compose.composeMaterial3)
     implementation(AppDependencies.Compose.composeNavigation)
+    implementation(AppDependencies.Compose.composeAnimation)
     debugImplementation(AppDependencies.Compose.composeUiTooling)
 }

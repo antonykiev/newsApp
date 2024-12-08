@@ -1,5 +1,9 @@
 package com.petproject.news.ui
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,10 +32,12 @@ import com.petproject.news.domain.data.NewsPresentation
 private val ICON_SIZE = 84.dp
 private val IMAGE_CORNER_RADIUS = ICON_SIZE / 2
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun NewsItem(
+fun SharedTransitionScope.NewsItem(
     item: NewsPresentation,
     onItemClick: (articleId: Long) -> Unit,
+    animatedVisibilityScope: AnimatedContentScope,
 ) {
     Row(
         modifier = Modifier
@@ -52,6 +58,12 @@ fun NewsItem(
                         bottomEnd = IMAGE_CORNER_RADIUS,
                         bottomStart = IMAGE_CORNER_RADIUS
                     )
+                ).sharedElement(
+                    state = rememberSharedContentState(key = "image/${item.imageUrl}"),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = { _, _ ->
+                        tween(durationMillis = 250)
+                    }
                 ),
             model = item.imageUrl,
             contentScale = ContentScale.Crop,
@@ -100,7 +112,7 @@ class NewsPresentationProvider : PreviewParameterProvider<NewsPresentation> {
 fun NewsItemPreview(
     @PreviewParameter(NewsPresentationProvider::class) newsItem: NewsPresentation,
 ) {
-    NewsItem(newsItem) {
-
-    }
+//    NewsItem(newsItem) {
+//
+//    }
 }

@@ -33,6 +33,7 @@ object AppDependencies {
         private const val activityComposeVersion = "1.9.1"
         private const val composeNavigationVersion = "2.8.0"
         private const val composeLiveCycle = "2.8.7"
+        private const val composeAnimationVersion = "1.7.5"
 
 
 
@@ -48,6 +49,8 @@ object AppDependencies {
         const val composeBom = "androidx.compose:compose-bom:${composeBomVersion}"
         const val composeActivity = "androidx.activity:activity-compose:${activityComposeVersion}"
         const val composeNavigation = "androidx.navigation:navigation-compose:${composeNavigationVersion}"
+        const val composeAnimation = "androidx.compose.animation:animation:${composeAnimationVersion}"
+
     }
 
     object Retrofit {
@@ -58,6 +61,14 @@ object AppDependencies {
         const val gsonConverter = "com.squareup.retrofit2:converter-gson:$retrofitVersion"
         const val okHttp = "com.squareup.okhttp3:okhttp:$okHttpVersion"
         const val interceptor = "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
+    }
+
+    object Room {
+        private const val roomVersion = "2.6.1"
+
+        const val roomRuntime  = "androidx.room:room-runtime:${roomVersion}"
+        const val compiler = "androidx.room:room-compiler:${roomVersion}"
+        const val ktx = "androidx.room:room-ktx:${roomVersion}"
     }
 
     object Test {

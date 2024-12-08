@@ -1,5 +1,9 @@
 package com.internet.connection.news_detailed.ui
 
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -10,15 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +29,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -43,10 +42,12 @@ import com.internet.connection.news_detailed.R
 import com.internet.connection.news_detailed.domain.data.ArticlePresentation
 import com.internet.connection.news_detailed.ui.screenstate.ScreenState
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun NewsDetailedScreen(
+fun SharedTransitionScope.NewsDetailedScreen(
     onBackClick: () -> Unit,
     articleId: Long,
+    animatedVisibilityScope: AnimatedContentScope,
 ) {
     val viewModel = hiltViewModel<NewsDetailedViewModel>()
 
@@ -58,15 +59,21 @@ fun NewsDetailedScreen(
 
     when (val state = screenState) {
         is ScreenState.Error -> ErrorStateScreen(state)
-        is ScreenState.Loaded -> LoadedStateScreen(state, onBackClick)
+        is ScreenState.Loaded -> LoadedStateScreen(
+            state = state,
+            onBackClick = onBackClick,
+            animatedVisibilityScope = animatedVisibilityScope
+        )
         ScreenState.Loading -> LoadingStateScreen(state)
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun LoadedStateScreen(
+fun SharedTransitionScope.LoadedStateScreen(
     state: ScreenState.Loaded,
     onBackClick: () -> Unit,
+    animatedVisibilityScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
     Column (
@@ -79,7 +86,14 @@ fun LoadedStateScreen(
         ) {
             AsyncImage(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .sharedElement(
+                        state = rememberSharedContentState(key = "image/${state.news.urlToImage}"),
+                        animatedVisibilityScope = animatedVisibilityScope,
+                        boundsTransform = { _, _ ->
+                            tween(durationMillis = 250)
+                        }
+                    ),
                 model = state.news.urlToImage,
                 contentScale = ContentScale.Crop,
                 contentDescription = null
@@ -197,20 +211,20 @@ fun ErrorStateScreen(
 )
 @Composable
 fun LoadedStateScreenPreview() {
-    LoadedStateScreen(
-        state = ScreenState.Loaded(
-            ArticlePresentation(
-                id = "id0".hashCode().toLong(),
-                author = "Joel Khalili",
-                description = LoremIpsum(20).toString(),
-                content = LoremIpsum(100).toString(),
-                urlToImage = "https://media.wired.com/photos/6703eb3979f13fda7f04485b/191:100/w_1280,c_limit/Satoshi-Nakamoto-biz-1341874258.jpg",
-                title = LoremIpsum(5).toString(),
-                publishedAt = "15 March 2024",
-                url = "https://www.wired.com/story/unmasking-bitcoin-creator-satoshi-nakamoto-again/"
-            )
-        ),
-        onBackClick = {}
-    )
+//    LoadedStateScreen(
+//        state = ScreenState.Loaded(
+//            ArticlePresentation(
+//                id = "id0".hashCode().toLong(),
+//                author = "Joel Khalili",
+//                description = LoremIpsum(20).toString(),
+//                content = LoremIpsum(100).toString(),
+//                urlToImage = "https://media.wired.com/photos/6703eb3979f13fda7f04485b/191:100/w_1280,c_limit/Satoshi-Nakamoto-biz-1341874258.jpg",
+//                title = LoremIpsum(5).toString(),
+//                publishedAt = "15 March 2024",
+//                url = "https://www.wired.com/story/unmasking-bitcoin-creator-satoshi-nakamoto-again/"
+//            )
+//        ),
+//        onBackClick = {}
+//    )
 }
 

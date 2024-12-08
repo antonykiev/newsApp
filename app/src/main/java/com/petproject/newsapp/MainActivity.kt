@@ -4,11 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
@@ -45,32 +48,41 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun RootNavHost() {
-    val navController = rememberNavController()
-    NavHost(
-        navController = navController,
-        startDestination = Screen.NewsList.route
-    ) {
-        composable(
-            route = Screen.NewsList.route
+    SharedTransitionLayout {
+        val sharedTransitionScope = this
+        val navController = rememberNavController()
+        NavHost(
+            navController = navController,
+            startDestination = Screen.NewsList.route
         ) {
-            NewsListScreen(onNewsClick = { articleId ->
-                navController.navigate(Screen.NewsDetailed.navigate(articleId))
-            })
-        }
-        composable(
-            route = Screen.NewsDetailed.route,
-            arguments = listOf(
-                navArgument(Screen.NewsDetailed.ARTICLE_ID_KEY) { type = NavType.LongType }
-            )
-        ) { backStackEntry ->
-            val articleId =
-                backStackEntry.arguments?.getLong(Screen.NewsDetailed.ARTICLE_ID_KEY) ?: -1
-            NewsDetailedScreen(
-                articleId = articleId,
-                onBackClick = { navController.popBackStack() }
-            )
+            composable(
+                route = Screen.NewsList.route
+            ) {
+                NewsListScreen(
+                    onNewsClick = { articleId ->
+                        navController.navigate(Screen.NewsDetailed.navigate(articleId))
+                    },
+                    animatedVisibilityScope = this,
+                )
+            }
+            composable(
+                route = Screen.NewsDetailed.route,
+                arguments = listOf(
+                    navArgument(Screen.NewsDetailed.ARTICLE_ID_KEY) { type = NavType.LongType }
+                )
+            ) { backStackEntry ->
+                val articleId =
+                    backStackEntry.arguments?.getLong(Screen.NewsDetailed.ARTICLE_ID_KEY) ?: -1
+                NewsDetailedScreen(
+                    articleId = articleId,
+                    onBackClick = { navController.popBackStack() },
+                    animatedVisibilityScope = this,
+                )
+            }
         }
     }
+
 }

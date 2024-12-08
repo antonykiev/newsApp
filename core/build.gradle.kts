@@ -1,3 +1,4 @@
+import dependency.Compose
 import dependency.Hilt
 import dependency.Project
 
@@ -41,6 +42,7 @@ dependencies {
     Project(":server")
     Project(":database")
     Hilt()
+    Compose()
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

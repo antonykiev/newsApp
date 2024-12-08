@@ -1,5 +1,7 @@
+import dependency.Compose
 import dependency.Core
 import dependency.Hilt
+import dependency.Room
 import dependency.Test
 
 plugins {
@@ -39,9 +41,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.room.runtime)
-    kapt(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
+    Room()
     implementation(libs.gson)
     Hilt()
     Test()
