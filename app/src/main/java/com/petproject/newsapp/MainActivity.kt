@@ -22,7 +22,7 @@ import androidx.navigation.navArgument
 import com.internet.connection.news_detailed.ui.NewsDetailedScreen
 import com.petproject.news.ui.NewsListScreen
 import com.petproject.newsapp.navigation.Screen
-import com.petproject.newsapp.ui.theme.NewsAppTheme
+import com.petproject.core.ui.theme.NewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

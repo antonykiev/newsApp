@@ -1,4 +1,4 @@
-package com.petproject.newsapp.ui.theme
+package com.petproject.core.ui.theme
 
 import android.app.Activity
 import android.os.Build
@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
@@ -18,7 +19,7 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
+    primary = Color(0xFFE8E2F8),
     secondary = PurpleGrey40,
     tertiary = Pink40
 

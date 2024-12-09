@@ -1,11 +1,13 @@
 package com.petproject.news.ui
 
-import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,12 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
@@ -37,11 +39,16 @@ private val IMAGE_CORNER_RADIUS = ICON_SIZE / 2
 fun SharedTransitionScope.NewsItem(
     item: NewsPresentation,
     onItemClick: (articleId: Long) -> Unit,
-    animatedVisibilityScope: AnimatedContentScope,
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
+            .clip(
+                RoundedCornerShape(16.dp)
+            )
+            .background(Color(0xFFE8E2F8))
             .clickable {
                 onItemClick(item.id)
             },
@@ -58,7 +65,8 @@ fun SharedTransitionScope.NewsItem(
                         bottomEnd = IMAGE_CORNER_RADIUS,
                         bottomStart = IMAGE_CORNER_RADIUS
                     )
-                ).sharedElement(
+                )
+                .sharedElement(
                     state = rememberSharedContentState(key = "image/${item.imageUrl}"),
                     animatedVisibilityScope = animatedVisibilityScope,
                     boundsTransform = { _, _ ->
@@ -94,25 +102,15 @@ fun SharedTransitionScope.NewsItem(
     }
 }
 
-class NewsPresentationProvider : PreviewParameterProvider<NewsPresentation> {
-    override val values = sequenceOf(
-        NewsPresentation(
-            id = "id0".hashCode().toLong(),
-            imageUrl = "https://media.wired.com/photos/6703eb3979f13fda7f04485b/191:100/w_1280,c_limit/Satoshi-Nakamoto-biz-1341874258.jpg",
-            title = "Unmasking Bitcoin Creator Satoshi Nakamoto—Again",
-            author = "Joel Khalili",
-            date = "2024-10-09T01:00:00Z",
-            url = "https://www.wired.com/story/unmasking-bitcoin-creator-satoshi-nakamoto-again/"
-        )
-    )
-}
-
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true)
 @Composable
 fun NewsItemPreview(
     @PreviewParameter(NewsPresentationProvider::class) newsItem: NewsPresentation,
 ) {
-//    NewsItem(newsItem) {
-//
-//    }
+    SharedTransitionLayout {
+        AnimatedVisibility(visible = true) {
+            NewsItem(newsItem, {}, this)
+        }
+    }
 }
