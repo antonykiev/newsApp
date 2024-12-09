@@ -64,6 +64,6 @@ dependencies {
 
     Project(":news")
     Project(":news_detailed")
-    Project(":core")
+    Project(":core:common")
     Test()
 }

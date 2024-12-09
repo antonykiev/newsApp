@@ -62,8 +62,8 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
 
-    implementation(project(":core"))
-    implementation(project(":server"))
+    implementation(project(":core:common"))
+    implementation(project(":core:server"))
 
     debugImplementation(libs.composeUiTooling)
     debugImplementation(libs.androidx.ui.test.manifest)

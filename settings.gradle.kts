@@ -24,8 +24,8 @@ rootProject.name = "NewsApp"
 include(
     ":app",
     ":news",
-    ":core",
-    ":server"
+    ":news_detailed",
+    ":core:common",
+    ":core:server",
+    ":core:database",
 )
-include(":database")
-include(":news_detailed")

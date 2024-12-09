@@ -50,8 +50,8 @@ android {
 }
 
 dependencies {
-    Project(":server")
-    Project(":database")
+    Project(":core:server")
+    Project(":core:database")
     Hilt()
     Compose()
     testImplementation(libs.junit)
