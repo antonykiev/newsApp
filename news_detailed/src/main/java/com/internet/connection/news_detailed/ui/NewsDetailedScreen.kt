@@ -129,7 +129,8 @@ fun SharedTransitionScope.LoadedStateScreen(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleLarge,
             text = state.news.title,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.secondary
         )
 
         Row(
@@ -142,13 +143,15 @@ fun SharedTransitionScope.LoadedStateScreen(
                 style = MaterialTheme.typography.bodyMedium,
                 text = stringResource(R.string.author, state.news.author),
                 fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.secondary
             )
 
             Text(
                 modifier = Modifier.weight(1f),
                 style = MaterialTheme.typography.bodyMedium,
                 text = stringResource(R.string.published_at, state.news.publishedAt),
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.secondary
             )
         }
         Text(
@@ -158,7 +161,8 @@ fun SharedTransitionScope.LoadedStateScreen(
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyMedium,
             fontWeight = FontWeight.Bold,
-            text = stringResource(R.string.description)
+            text = stringResource(R.string.description),
+            color = MaterialTheme.colorScheme.secondary
         )
 
         Text(
@@ -168,7 +172,8 @@ fun SharedTransitionScope.LoadedStateScreen(
             textAlign = TextAlign.Start,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.bodyLarge,
-            text = state.news.description
+            text = state.news.description,
+            color = MaterialTheme.colorScheme.secondary
         )
 
         Text(
@@ -178,7 +183,8 @@ fun SharedTransitionScope.LoadedStateScreen(
             textAlign = TextAlign.Start,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.Bold,
-            text = state.news.content
+            text = state.news.content,
+            color = MaterialTheme.colorScheme.secondary
         )
     }
 }

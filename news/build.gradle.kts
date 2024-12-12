@@ -1,3 +1,8 @@
+import dependency.Android
+import dependency.Compose
+import dependency.Hilt
+import dependency.Test
+
 plugins {
     id("com.android.library")
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -38,25 +43,21 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
+    tasks.withType().configureEach {
+        kotlinOptions {
+            freeCompilerArgs = freeCompilerArgs + listOf(
+                "-opt-in=kotlin.RequiresOptIn",
+                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi",
+            )
+        }
+    }
 }
 
 dependencies {
-
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.core.ktx)
-
-    implementation(libs.composeActivity)
-    implementation(platform(libs.composeBom))
-    implementation(libs.composeUi)
-    implementation(libs.composeUiGraphics)
-    implementation(libs.composeUiToolingPreview)
-    implementation(libs.composeMaterial3)
-    implementation(libs.composeNavigation)
-
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    Android()
+    Compose()
+    Hilt()
     implementation(libs.hilt.navigation.compose)
 
     implementation(libs.coil.compose)
@@ -65,12 +66,5 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:server"))
 
-    debugImplementation(libs.composeUiTooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.composeBom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
+    Test()
 }

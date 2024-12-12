@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,6 +30,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.petproject.core.ui.theme.NewsAppTheme
 import com.petproject.news.domain.data.NewsPresentation
 
 private val ICON_SIZE = 84.dp
@@ -48,7 +50,7 @@ fun SharedTransitionScope.NewsItem(
             .clip(
                 RoundedCornerShape(16.dp)
             )
-            .background(Color(0xFFE8E2F8))
+            .background(MaterialTheme.colorScheme.surface)
             .clickable {
                 onItemClick(item.id)
             },
@@ -63,7 +65,7 @@ fun SharedTransitionScope.NewsItem(
                         topEnd = IMAGE_CORNER_RADIUS,
                         topStart = IMAGE_CORNER_RADIUS,
                         bottomEnd = IMAGE_CORNER_RADIUS,
-                        bottomStart = IMAGE_CORNER_RADIUS
+                        bottomStart = IMAGE_CORNER_RADIUS,
                     )
                 )
                 .sharedElement(
@@ -86,17 +88,20 @@ fun SharedTransitionScope.NewsItem(
                 modifier = Modifier.padding(bottom = 12.dp),
                 text = item.date,
                 maxLines = 1,
+                color = MaterialTheme.colorScheme.secondary
             )
             Text(
                 modifier = Modifier.padding(bottom = 12.dp),
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 text = item.author,
+                color = MaterialTheme.colorScheme.secondary
             )
             Text(
                 text = item.title,
                 maxLines = 3,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.secondary
             )
         }
     }
@@ -108,9 +113,11 @@ fun SharedTransitionScope.NewsItem(
 fun NewsItemPreview(
     @PreviewParameter(NewsPresentationProvider::class) newsItem: NewsPresentation,
 ) {
-    SharedTransitionLayout {
-        AnimatedVisibility(visible = true) {
-            NewsItem(newsItem, {}, this)
+    NewsAppTheme {
+        SharedTransitionLayout {
+            AnimatedVisibility(visible = true) {
+                NewsItem(newsItem, {}, this)
+            }
         }
     }
 }

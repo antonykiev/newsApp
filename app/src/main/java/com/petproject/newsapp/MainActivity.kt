@@ -52,7 +52,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun RootNavHost() {
     SharedTransitionLayout {
-        val sharedTransitionScope = this
         val navController = rememberNavController()
         NavHost(
             navController = navController,
@@ -84,5 +83,4 @@ fun RootNavHost() {
             }
         }
     }
-
 }

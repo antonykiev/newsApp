@@ -3,6 +3,7 @@ package com.petproject.news.ui
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -45,7 +47,9 @@ fun SharedTransitionScope.NewsListScreen(
                 contentPadding = PaddingValues(
                     vertical = 16.dp,
                     horizontal = 8.dp
-                )
+                ),
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.background)
             ) {
                 items(
                     items = state.news,
