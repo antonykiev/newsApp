@@ -12,8 +12,8 @@ class ScreenStateUseCase @Inject constructor() : BaseScreenStateUseCase<ScreenSt
     override fun getInitialState(): ScreenState {
         return ScreenState(
             searchBarState = SearchBarState(
-                query = "",
-                active = true
+                query = DEFAULT_QUERY,
+                active = SEARCH_BAR_ACTIVE
             ),
             listState = ListState.Initial
         )
@@ -27,5 +27,18 @@ class ScreenStateUseCase @Inject constructor() : BaseScreenStateUseCase<ScreenSt
                 )
             )
         }
+    }
+
+    fun updateListState(listState: ListState) {
+        screenStateFlow.update {
+            it.copy(
+                listState = listState
+            )
+        }
+    }
+
+    companion object Constants {
+        private const val DEFAULT_QUERY = ""
+        private const val SEARCH_BAR_ACTIVE = true
     }
 }

@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -49,24 +51,7 @@ fun SharedTransitionScope.NewsListScreen(
 
     val screenState by viewModel.state.collectAsStateWithLifecycle()
 
-    when (val state = screenState.listState) {
-        is ListState.ErrorLoading -> {
-
-        }
-
-        is ListState.Loaded -> LoadedStateScreen(
-            state = state,
-            onNewsClick = onNewsClick,
-            animatedVisibilityScope = animatedVisibilityScope
-        )
-
-        is ListState.Loading -> LoadingStateScreen(state)
-        ListState.Initial -> {
-
-        }
-    }
-
-    Box(
+    Row(
         modifier = Modifier.fillMaxSize(),
     ) {
         SearchBar(
@@ -75,7 +60,7 @@ fun SharedTransitionScope.NewsListScreen(
                 viewModel.onQueryChange(it)
             },
             onSearch = {
-                Log.d("NewsListScreen", "NewsListScreen: $it")
+                viewModel.onSearch(it)
             },
             active = screenState.searchBarState.active,
             onActiveChange = { },
@@ -85,9 +70,25 @@ fun SharedTransitionScope.NewsListScreen(
             trailingIcon = {
                 Icon(imageVector = Icons.Default.Search, contentDescription = null)
             },
-            modifier = Modifier
+            modifier = Modifier.fillMaxWidth()
         ) {
 
+            when (val state = screenState.listState) {
+                is ListState.ErrorLoading -> {
+
+                }
+
+                is ListState.Loaded -> LoadedStateScreen(
+                    state = state,
+                    onNewsClick = onNewsClick,
+                    animatedVisibilityScope = animatedVisibilityScope
+                )
+
+                is ListState.Loading -> LoadingStateScreen(state)
+                ListState.Initial -> {
+
+                }
+            }
         }
     }
 }
@@ -101,6 +102,8 @@ fun SharedTransitionScope.LoadedStateScreen(
     onNewsClick: (articleId: Long) -> Unit,
     animatedVisibilityScope: AnimatedContentScope,
 ) {
+    Log.d("NewsListScreen", "LoadedStateScreen: $state")
+
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(

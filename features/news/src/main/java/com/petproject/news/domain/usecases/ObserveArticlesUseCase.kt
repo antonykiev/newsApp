@@ -14,15 +14,14 @@ class ObserveArticlesUseCase @Inject constructor(
     private val serverRepository: ArticleRepository,
 ) {
     // transform result to Result
-    suspend operator fun invoke(): Flow<List<NewsPresentation>> {
+    suspend operator fun invoke(query: kotlin.String): Flow<List<NewsPresentation>> {
         return channelFlow {
-            val keyword = "bitcoin"
             launch(Dispatchers.IO) {
-                serverRepository.remoteArticles(keyword)
-                    .map { serverRepository.saveLocalArticles(it, keyword) }
+                serverRepository.remoteArticles(query)
+                    .map { serverRepository.saveLocalArticles(it, query) }
             }
             launch(Dispatchers.IO) {
-                serverRepository.observeLocalArticles(keyword)
+                serverRepository.observeLocalArticles(query)
                     .map { it.map(ArticleToNewsPresentationMapper::newsPresentation) }
                     .collect(::trySend)
             }
