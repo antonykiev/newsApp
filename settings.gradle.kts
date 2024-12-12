@@ -23,8 +23,8 @@ dependencyResolutionManagement {
 rootProject.name = "NewsApp"
 include(
     ":app",
-    ":news",
-    ":news_detailed",
+    ":features:news",
+    ":features:news_detailed",
     ":core:common",
     ":core:server",
     ":core:database",

@@ -62,8 +62,8 @@ dependencies {
     Compose()
     Hilt()
 
-    Project(":news")
-    Project(":news_detailed")
+    Project(":features:news")
+    Project(":features:news_detailed")
     Project(":core:common")
     Test()
 }
