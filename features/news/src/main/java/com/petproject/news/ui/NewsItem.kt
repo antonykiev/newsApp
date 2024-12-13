@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.petproject.core.ui.LocalAnimatedContentScope
 import com.petproject.core.ui.theme.NewsAppTheme
 import com.petproject.news.domain.data.NewsPresentation
 
@@ -41,7 +42,6 @@ private val IMAGE_CORNER_RADIUS = ICON_SIZE / 2
 fun SharedTransitionScope.NewsItem(
     item: NewsPresentation,
     onItemClick: (articleId: Long) -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -70,7 +70,7 @@ fun SharedTransitionScope.NewsItem(
                 )
                 .sharedElement(
                     state = rememberSharedContentState(key = "image/${item.imageUrl}"),
-                    animatedVisibilityScope = animatedVisibilityScope,
+                    animatedVisibilityScope = LocalAnimatedContentScope.current,
                     boundsTransform = { _, _ ->
                         tween(durationMillis = 250)
                     }
@@ -116,7 +116,7 @@ fun NewsItemPreview(
     NewsAppTheme {
         SharedTransitionLayout {
             AnimatedVisibility(visible = true) {
-                NewsItem(newsItem, {}, this)
+                NewsItem(newsItem, {})
             }
         }
     }

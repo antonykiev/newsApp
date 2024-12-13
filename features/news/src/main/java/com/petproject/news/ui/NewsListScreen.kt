@@ -36,7 +36,6 @@ import com.petproject.news.ui.screenstate.ListState
 @Composable
 fun SharedTransitionScope.NewsListScreen(
     onNewsClick: (articleId: Long) -> Unit,
-    animatedVisibilityScope: AnimatedContentScope,
 ) {
     val viewModel = hiltViewModel<NewsViewModel>()
 
@@ -73,7 +72,6 @@ fun SharedTransitionScope.NewsListScreen(
             ListContent(
                 onNewsClick = onNewsClick,
                 screenState = screenState.listState,
-                animatedVisibilityScope = animatedVisibilityScope
             )
         }
     }
@@ -84,7 +82,6 @@ fun SharedTransitionScope.NewsListScreen(
 fun SharedTransitionScope.ListContent(
     onNewsClick: (articleId: Long) -> Unit,
     screenState: ListState,
-    animatedVisibilityScope: AnimatedContentScope,
 ) {
     when (screenState) {
         is ListState.ErrorLoading -> {
@@ -94,7 +91,6 @@ fun SharedTransitionScope.ListContent(
         is ListState.Loaded -> LoadedStateScreen(
             state = screenState,
             onNewsClick = onNewsClick,
-            animatedVisibilityScope = animatedVisibilityScope
         )
 
         is ListState.Loading -> LoadingStateScreen(screenState)
@@ -109,7 +105,6 @@ fun SharedTransitionScope.ListContent(
 fun SharedTransitionScope.LoadedStateScreen(
     state: ListState.Loaded,
     onNewsClick: (articleId: Long) -> Unit,
-    animatedVisibilityScope: AnimatedContentScope,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -127,7 +122,6 @@ fun SharedTransitionScope.LoadedStateScreen(
             NewsItem(
                 item = item,
                 onItemClick = onNewsClick,
-                animatedVisibilityScope = animatedVisibilityScope
             )
         }
     }

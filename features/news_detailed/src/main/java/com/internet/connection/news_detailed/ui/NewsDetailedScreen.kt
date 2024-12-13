@@ -41,13 +41,13 @@ import coil3.compose.AsyncImage
 import com.internet.connection.news_detailed.R
 import com.internet.connection.news_detailed.domain.data.ArticlePresentation
 import com.internet.connection.news_detailed.ui.screenstate.ScreenState
+import com.petproject.core.ui.LocalAnimatedContentScope
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.NewsDetailedScreen(
     onBackClick: () -> Unit,
     articleId: Long,
-    animatedVisibilityScope: AnimatedContentScope,
 ) {
     val viewModel = hiltViewModel<NewsDetailedViewModel>()
 
@@ -62,7 +62,6 @@ fun SharedTransitionScope.NewsDetailedScreen(
         is ScreenState.Loaded -> LoadedStateScreen(
             state = state,
             onBackClick = onBackClick,
-            animatedVisibilityScope = animatedVisibilityScope
         )
         ScreenState.Loading -> LoadingStateScreen(state)
     }
@@ -73,7 +72,6 @@ fun SharedTransitionScope.NewsDetailedScreen(
 fun SharedTransitionScope.LoadedStateScreen(
     state: ScreenState.Loaded,
     onBackClick: () -> Unit,
-    animatedVisibilityScope: AnimatedContentScope,
     modifier: Modifier = Modifier,
 ) {
     Column (
@@ -89,7 +87,7 @@ fun SharedTransitionScope.LoadedStateScreen(
                     .fillMaxSize()
                     .sharedElement(
                         state = rememberSharedContentState(key = "image/${state.news.urlToImage}"),
-                        animatedVisibilityScope = animatedVisibilityScope,
+                        animatedVisibilityScope = LocalAnimatedContentScope.current,
                         boundsTransform = { _, _ ->
                             tween(durationMillis = 250)
                         }
