@@ -6,7 +6,6 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -24,9 +23,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -35,7 +31,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.petproject.news.R
 import com.petproject.news.ui.screenstate.ListState
-import com.petproject.news.ui.screenstate.ScreenState
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -68,32 +63,46 @@ fun SharedTransitionScope.NewsListScreen(
                 Text(text = stringResource(R.string.enter_your_query))
             },
             trailingIcon = {
-                Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = null
+                )
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-
-            when (val state = screenState.listState) {
-                is ListState.ErrorLoading -> {
-
-                }
-
-                is ListState.Loaded -> LoadedStateScreen(
-                    state = state,
-                    onNewsClick = onNewsClick,
-                    animatedVisibilityScope = animatedVisibilityScope
-                )
-
-                is ListState.Loading -> LoadingStateScreen(state)
-                ListState.Initial -> {
-
-                }
-            }
+            ListContent(
+                onNewsClick = onNewsClick,
+                screenState = screenState.listState,
+                animatedVisibilityScope = animatedVisibilityScope
+            )
         }
     }
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
+@Composable
+fun SharedTransitionScope.ListContent(
+    onNewsClick: (articleId: Long) -> Unit,
+    screenState: ListState,
+    animatedVisibilityScope: AnimatedContentScope,
+) {
+    when (screenState) {
+        is ListState.ErrorLoading -> {
 
+        }
+
+        is ListState.Loaded -> LoadedStateScreen(
+            state = screenState,
+            onNewsClick = onNewsClick,
+            animatedVisibilityScope = animatedVisibilityScope
+        )
+
+        is ListState.Loading -> LoadingStateScreen(screenState)
+        ListState.Initial -> {
+
+        }
+    }
+}
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
@@ -102,8 +111,6 @@ fun SharedTransitionScope.LoadedStateScreen(
     onNewsClick: (articleId: Long) -> Unit,
     animatedVisibilityScope: AnimatedContentScope,
 ) {
-    Log.d("NewsListScreen", "LoadedStateScreen: $state")
-
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(
