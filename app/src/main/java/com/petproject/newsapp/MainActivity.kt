@@ -20,10 +20,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.internet.connection.news_detailed.ui.NewsDetailedScreen
+import com.petproject.core.ui.LocalAnimatedContentScope
+import com.petproject.core.ui.LocalSharedTransitionScope
 import com.petproject.core.ui.theme.NewsAppTheme
 import com.petproject.news.ui.NewsListScreen
 import com.petproject.newsapp.navigation.Screen
-import com.petproject.core.ui.LocalAnimatedContentScope
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,46 +54,49 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun RootNavHost() {
     SharedTransitionLayout {
-
-        val navController = rememberNavController()
-        NavHost(
-            navController = navController,
-            startDestination = Screen.NewsList.route
+        CompositionLocalProvider(
+            LocalSharedTransitionScope provides this@SharedTransitionLayout
         ) {
-
-            composable(
-                route = Screen.NewsList.route
+            val navController = rememberNavController()
+            NavHost(
+                navController = navController,
+                startDestination = Screen.NewsList.route
             ) {
 
-                CompositionLocalProvider(
-                    LocalAnimatedContentScope provides this@composable
+                composable(
+                    route = Screen.NewsList.route
                 ) {
-                    NewsListScreen(
-                        onNewsClick = { articleId ->
-                            navController.navigate(Screen.NewsDetailed.navigate(articleId))
-                        },
-                    )
-                }
-            }
 
-            composable(
-                route = Screen.NewsDetailed.route,
-                arguments = listOf(
-                    navArgument(Screen.NewsDetailed.ARTICLE_ID_KEY) { type = NavType.LongType }
-                )
-            ) { backStackEntry ->
-                val articleId =
-                backStackEntry.arguments?.getLong(Screen.NewsDetailed.ARTICLE_ID_KEY) ?: -1
-                CompositionLocalProvider(
-                    LocalAnimatedContentScope provides this@composable
-                ) {
-                    NewsDetailedScreen(
-                        articleId = articleId,
-                        onBackClick = { navController.popBackStack() },
-                    )
+                    CompositionLocalProvider(
+                        LocalAnimatedContentScope provides this@composable
+                    ) {
+                        NewsListScreen(
+                            onNewsClick = { articleId ->
+                                navController.navigate(Screen.NewsDetailed.navigate(articleId))
+                            },
+                        )
+                    }
                 }
-            }
 
+                composable(
+                    route = Screen.NewsDetailed.route,
+                    arguments = listOf(
+                        navArgument(Screen.NewsDetailed.ARTICLE_ID_KEY) { type = NavType.LongType }
+                    )
+                ) { backStackEntry ->
+                    val articleId =
+                        backStackEntry.arguments?.getLong(Screen.NewsDetailed.ARTICLE_ID_KEY) ?: -1
+                    CompositionLocalProvider(
+                        LocalAnimatedContentScope provides this@composable
+                    ) {
+                        NewsDetailedScreen(
+                            articleId = articleId,
+                            onBackClick = { navController.popBackStack() },
+                        )
+                    }
+                }
+
+            }
         }
     }
 }

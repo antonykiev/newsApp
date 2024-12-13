@@ -1,7 +1,5 @@
 package com.petproject.news.ui
 
-import android.util.Log
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
@@ -32,9 +30,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.petproject.news.R
 import com.petproject.news.ui.screenstate.ListState
 
-@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.NewsListScreen(
+fun NewsListScreen(
     onNewsClick: (articleId: Long) -> Unit,
 ) {
     val viewModel = hiltViewModel<NewsViewModel>()
@@ -79,7 +76,7 @@ fun SharedTransitionScope.NewsListScreen(
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.ListContent(
+fun ListContent(
     onNewsClick: (articleId: Long) -> Unit,
     screenState: ListState,
 ) {
@@ -102,7 +99,7 @@ fun SharedTransitionScope.ListContent(
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.LoadedStateScreen(
+fun LoadedStateScreen(
     state: ListState.Loaded,
     onNewsClick: (articleId: Long) -> Unit,
 ) {

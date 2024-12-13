@@ -1,10 +1,8 @@
 package com.petproject.news.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -31,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.petproject.core.ui.LocalAnimatedContentScope
+import com.petproject.core.ui.LocalSharedTransitionScope
 import com.petproject.core.ui.theme.NewsAppTheme
 import com.petproject.news.domain.data.NewsPresentation
 
@@ -39,7 +37,7 @@ private val IMAGE_CORNER_RADIUS = ICON_SIZE / 2
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.NewsItem(
+fun NewsItem(
     item: NewsPresentation,
     onItemClick: (articleId: Long) -> Unit,
     modifier: Modifier = Modifier,
@@ -56,6 +54,7 @@ fun SharedTransitionScope.NewsItem(
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
+
         AsyncImage(
             modifier = Modifier
                 .height(ICON_SIZE)
@@ -68,13 +67,17 @@ fun SharedTransitionScope.NewsItem(
                         bottomStart = IMAGE_CORNER_RADIUS,
                     )
                 )
-                .sharedElement(
-                    state = rememberSharedContentState(key = "image/${item.imageUrl}"),
-                    animatedVisibilityScope = LocalAnimatedContentScope.current,
-                    boundsTransform = { _, _ ->
-                        tween(durationMillis = 250)
+                .let { modifier ->
+                    with(LocalSharedTransitionScope.current) {
+                        modifier.sharedElement(
+                            state = rememberSharedContentState(key = "image/${item.imageUrl}"),
+                            animatedVisibilityScope = LocalAnimatedContentScope.current,
+                            boundsTransform = { _, _ ->
+                                tween(durationMillis = 250)
+                            }
+                        )
                     }
-                ),
+                },
             model = item.imageUrl,
             contentScale = ContentScale.Crop,
             contentDescription = null

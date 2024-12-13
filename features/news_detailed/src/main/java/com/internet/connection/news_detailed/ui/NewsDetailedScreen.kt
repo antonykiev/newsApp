@@ -1,8 +1,6 @@
 package com.internet.connection.news_detailed.ui
 
-import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -33,19 +31,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
 import com.internet.connection.news_detailed.R
-import com.internet.connection.news_detailed.domain.data.ArticlePresentation
 import com.internet.connection.news_detailed.ui.screenstate.ScreenState
 import com.petproject.core.ui.LocalAnimatedContentScope
+import com.petproject.core.ui.LocalSharedTransitionScope
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.NewsDetailedScreen(
+fun NewsDetailedScreen(
     onBackClick: () -> Unit,
     articleId: Long,
 ) {
@@ -63,18 +60,19 @@ fun SharedTransitionScope.NewsDetailedScreen(
             state = state,
             onBackClick = onBackClick,
         )
+
         ScreenState.Loading -> LoadingStateScreen(state)
     }
 }
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.LoadedStateScreen(
+fun LoadedStateScreen(
     state: ScreenState.Loaded,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column (
+    Column(
         modifier = modifier.fillMaxSize()
     ) {
         Box(
@@ -85,13 +83,17 @@ fun SharedTransitionScope.LoadedStateScreen(
             AsyncImage(
                 modifier = Modifier
                     .fillMaxSize()
-                    .sharedElement(
-                        state = rememberSharedContentState(key = "image/${state.news.urlToImage}"),
-                        animatedVisibilityScope = LocalAnimatedContentScope.current,
-                        boundsTransform = { _, _ ->
-                            tween(durationMillis = 250)
+                    .let { modifier ->
+                        with(LocalSharedTransitionScope.current) {
+                            modifier.sharedElement(
+                                state = rememberSharedContentState(key = "image/${state.news.urlToImage}"),
+                                animatedVisibilityScope = LocalAnimatedContentScope.current,
+                                boundsTransform = { _, _ ->
+                                    tween(durationMillis = 250)
+                                }
+                            )
                         }
-                    ),
+                    },
                 model = state.news.urlToImage,
                 contentScale = ContentScale.Crop,
                 contentDescription = null
@@ -113,7 +115,7 @@ fun SharedTransitionScope.LoadedStateScreen(
             ) {
                 Icon(
                     modifier = Modifier.padding(8.dp),
-                    imageVector  = Icons.AutoMirrored.Filled.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back),
                     tint = Color.White
                 )
@@ -190,7 +192,7 @@ fun SharedTransitionScope.LoadedStateScreen(
 @Composable
 fun LoadingStateScreen(
     state: ScreenState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -204,7 +206,7 @@ fun LoadingStateScreen(
 @Composable
 fun ErrorStateScreen(
     state: ScreenState.Error,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
 
