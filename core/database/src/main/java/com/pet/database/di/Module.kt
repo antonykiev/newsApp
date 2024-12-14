@@ -3,6 +3,7 @@ package com.pet.database.di
 import android.content.Context
 import com.pet.database.AppDatabase
 import com.pet.database.dao.ArticleDao
+import com.pet.database.dao.QueryDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,5 +25,10 @@ class Module {
     @Provides
     fun provideArticleDao(appDatabase: AppDatabase): ArticleDao {
         return appDatabase.articleDao()
+    }
+
+    @Provides
+    fun provideQueryDao(appDatabase: AppDatabase): QueryDao {
+        return appDatabase.queryDao()
     }
 }

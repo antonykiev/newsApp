@@ -7,13 +7,16 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.pet.database.converter.Converters
 import com.pet.database.dao.ArticleDao
+import com.pet.database.dao.QueryDao
 import com.pet.database.entity.ArticleEntity
+import com.pet.database.entity.QueryEntity
 import com.pet.database.entity.SourceEntity
 
 @Database(
     entities = [
         ArticleEntity::class,
         SourceEntity::class,
+        QueryEntity::class,
     ],
     version = 1,
     exportSchema = false
@@ -22,6 +25,7 @@ import com.pet.database.entity.SourceEntity
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun articleDao(): ArticleDao
+    abstract fun queryDao(): QueryDao
 
     companion object {
         private var INSTANCE: AppDatabase? = null
