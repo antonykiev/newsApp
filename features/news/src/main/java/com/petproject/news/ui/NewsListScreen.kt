@@ -1,7 +1,6 @@
 package com.petproject.news.ui
 
-import androidx.compose.animation.ExperimentalSharedTransitionApi
-import androidx.compose.animation.SharedTransitionScope
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,14 +8,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,8 +24,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,9 +43,10 @@ fun NewsListScreen(
 
     val screenState by viewModel.state.collectAsStateWithLifecycle()
 
-    Row(
-        modifier = Modifier.fillMaxSize(),
-    ) {
+    Log.d("NewsListScreen", "screenState: $screenState")
+
+    Scaffold(
+        topBar = {
         SearchBar(
             query = screenState.searchBarState.query,
             onQueryChange = {
@@ -57,7 +56,9 @@ fun NewsListScreen(
                 viewModel.onSearch(it)
             },
             active = screenState.searchBarState.active,
-            onActiveChange = { },
+            onActiveChange = {
+                viewModel.onActiveChange(it)
+            },
             placeholder = {
                 Text(text = stringResource(R.string.enter_your_query))
             },
@@ -67,18 +68,26 @@ fun NewsListScreen(
                     contentDescription = null
                 )
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
         ) {
+
+        }
+        },
+        content = { innerPadding ->
             ListContent(
+                modifier = Modifier.padding(innerPadding),
                 onNewsClick = onNewsClick,
                 screenState = screenState.listState,
             )
         }
-    }
+    )
 }
 
 @Composable
 fun ListContent(
+    modifier: Modifier = Modifier,
     onNewsClick: (articleId: Long) -> Unit,
     screenState: ListState,
 ) {
@@ -112,6 +121,7 @@ fun LoadedStateScreen(
         ),
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
     ) {
         items(
             items = state.news,

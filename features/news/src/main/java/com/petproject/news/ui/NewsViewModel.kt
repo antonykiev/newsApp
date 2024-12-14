@@ -1,17 +1,13 @@
 package com.petproject.news.ui
 
-import android.app.DownloadManager.Query
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.petproject.news.ui.screenstate.ScreenState
 import com.petproject.news.domain.usecases.ObserveArticlesUseCase
 import com.petproject.news.domain.usecases.ScreenStateUseCase
 import com.petproject.news.ui.screenstate.ListState
-import com.petproject.news.ui.screenstate.SearchBarState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,9 +21,11 @@ class NewsViewModel @Inject constructor(
     val state: StateFlow<ScreenState> = screenStateUseCase.observeScreenState()
 
     fun loadInitialState() {
-        viewModelScope.launch {
-
-        }
+//        viewModelScope.launch {
+//            observeArticlesUseCase("bitcoin")
+//                .map(ListState::Loaded)
+//                .collect(screenStateUseCase::updateListState)
+//        }
     }
 
     fun onQueryChange(query: String) {
@@ -40,5 +38,10 @@ class NewsViewModel @Inject constructor(
                 .map(ListState::Loaded)
                 .collect(screenStateUseCase::updateListState)
         }
+        screenStateUseCase.updateActiveState(false)
+    }
+
+    fun onActiveChange(isActive: Boolean) {
+        screenStateUseCase.updateActiveState(isActive)
     }
 }

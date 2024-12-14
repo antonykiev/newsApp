@@ -29,3 +29,4 @@ include(
     ":core:server",
     ":core:database",
 )
+include(":features:search")
