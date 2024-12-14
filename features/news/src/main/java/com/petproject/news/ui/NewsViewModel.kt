@@ -21,11 +21,7 @@ class NewsViewModel @Inject constructor(
     val state: StateFlow<ScreenState> = screenStateUseCase.observeScreenState()
 
     fun loadInitialState() {
-//        viewModelScope.launch {
-//            observeArticlesUseCase("bitcoin")
-//                .map(ListState::Loaded)
-//                .collect(screenStateUseCase::updateListState)
-//        }
+//        onSearch("bitcoin")
     }
 
     fun onQueryChange(query: String) {

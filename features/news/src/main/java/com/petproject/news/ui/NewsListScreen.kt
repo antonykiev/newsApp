@@ -1,16 +1,16 @@
 package com.petproject.news.ui
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
@@ -47,37 +47,39 @@ fun NewsListScreen(
 
     Scaffold(
         topBar = {
-        SearchBar(
-            query = screenState.searchBarState.query,
-            onQueryChange = {
-                viewModel.onQueryChange(it)
-            },
-            onSearch = {
-                viewModel.onSearch(it)
-            },
-            active = screenState.searchBarState.active,
-            onActiveChange = {
-                viewModel.onActiveChange(it)
-            },
-            placeholder = {
-                Text(text = stringResource(R.string.enter_your_query))
-            },
-            trailingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = null
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
+            SearchBar(
+                query = screenState.searchBarState.query,
+                onQueryChange = {
+                    viewModel.onQueryChange(it)
+                },
+                onSearch = {
+                    viewModel.onSearch(it)
+                },
+                active = screenState.searchBarState.active,
+                onActiveChange = {
+                    viewModel.onActiveChange(it)
+                },
+                placeholder = {
+                    Text(text = stringResource(R.string.enter_your_query))
+                },
+                trailingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = null
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
 
-        }
+            }
         },
         content = { innerPadding ->
+
+            Log.d("NewsListScreen", "innerPadding: $innerPadding")
             ListContent(
-                modifier = Modifier.padding(innerPadding),
+                innerPadding = innerPadding,
                 onNewsClick = onNewsClick,
                 screenState = screenState.listState,
             )
@@ -87,9 +89,9 @@ fun NewsListScreen(
 
 @Composable
 fun ListContent(
-    modifier: Modifier = Modifier,
     onNewsClick: (articleId: Long) -> Unit,
     screenState: ListState,
+    innerPadding: PaddingValues,
 ) {
     when (screenState) {
         is ListState.ErrorLoading -> {
@@ -97,6 +99,7 @@ fun ListContent(
         }
 
         is ListState.Loaded -> LoadedStateScreen(
+            innerPadding = innerPadding,
             state = screenState,
             onNewsClick = onNewsClick,
         )
@@ -112,22 +115,25 @@ fun ListContent(
 fun LoadedStateScreen(
     state: ListState.Loaded,
     onNewsClick: (articleId: Long) -> Unit,
+    innerPadding: PaddingValues,
 ) {
     LazyColumn(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         contentPadding = PaddingValues(
-            vertical = 16.dp,
             horizontal = 8.dp
         ),
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxSize()
     ) {
-        items(
+        itemsIndexed(
             items = state.news,
-            key = { it.title }
-        ) { item ->
+            key = { _, it -> it.title }
+        ) { index, item ->
+            val modifier = Modifier.calculateModifier(index, innerPadding, state)
+
             NewsItem(
+                modifier = modifier,
                 item = item,
                 onItemClick = onNewsClick,
             )
@@ -143,6 +149,14 @@ fun LoadingStateScreen(state: ListState.Loading) {
         verticalArrangement = Arrangement.Center
     ) {
         CircularProgressIndicator()
+    }
+}
+
+private fun Modifier.calculateModifier(index: Int, innerPadding: PaddingValues, state: ListState.Loaded): Modifier {
+    return when (index) {
+        0 -> padding(top = innerPadding.calculateTopPadding())
+        state.news.lastIndex -> padding(bottom = 16.dp)
+        else -> this
     }
 }
 
