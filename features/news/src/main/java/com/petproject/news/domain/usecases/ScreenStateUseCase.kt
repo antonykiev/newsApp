@@ -50,7 +50,13 @@ class ScreenStateUseCase @Inject constructor() : BaseScreenStateUseCase<ScreenSt
     }
 
     fun updateQueryHistory(queryHistory: List<Query>) {
-
+        screenStateFlow.update {
+            it.copy(
+                searchBarState = it.searchBarState.copy(
+                    queryHistory = queryHistory
+                )
+            )
+        }
     }
 
     companion object Constants {

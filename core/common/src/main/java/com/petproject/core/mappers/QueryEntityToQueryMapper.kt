@@ -8,7 +8,7 @@ object QueryEntityToQueryMapper {
     fun query(queryEntity: QueryEntity): Query {
         return Query(
             id = queryEntity.id,
-            query = queryEntity.query,
+            text = queryEntity.query,
             timestamp = queryEntity.timestamp
         )
     }

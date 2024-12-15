@@ -2,6 +2,7 @@ package com.petproject.news.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.petproject.core.data.Query
 import com.petproject.news.domain.usecases.AddQueryUseCase
 import com.petproject.news.domain.usecases.ObserveArticlesUseCase
 import com.petproject.news.domain.usecases.QueryHistoryUseCase
@@ -48,5 +49,10 @@ class NewsViewModel @Inject constructor(
                 screenStateUseCase.updateQueryHistory(it)
             }
         }
+    }
+
+    fun onQuerySelected(query: Query) {
+        onQueryChange(query.text)
+        onSearch(query.text)
     }
 }
