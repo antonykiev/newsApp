@@ -29,7 +29,6 @@ class ArticleLocalDataSourceImpl(
         }.filterNotNull()
 
         articleDao.update(merged)
-
     }
 
     override suspend fun article(articleId: Long): Result<ArticleEntity> {
