@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.pet.database.entity.ArticleEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -14,11 +15,11 @@ interface ArticleDao {
     @Query("SELECT * FROM articles WHERE id = :articleId")
     suspend fun article(articleId: Long): ArticleEntity
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(users: List<ArticleEntity>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(articles: List<ArticleEntity>): List<Long>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(users: ArticleEntity)
+    @Update
+    suspend fun update(articles: List<ArticleEntity>)
 
     @Query("SELECT * FROM articles")
     suspend fun getAllArticles(): List<ArticleEntity>

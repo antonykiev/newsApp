@@ -10,7 +10,20 @@ class ArticleLocalDataSourceImpl(
 ) : ArticleLocalDataSource {
 
     override suspend fun insertArticles(listArticleEntity: List<ArticleEntity>) {
-        articleDao.insert(listArticleEntity)
+        val resultList = articleDao.insert(listArticleEntity)
+        if (!resultList.contains(-1)) return
+
+        val articlesToSave = resultList.mapIndexed  { index, it ->
+            if (it == -1L) {
+                val articleNew = listArticleEntity[index]
+                val articleDb = articleDao.article(articleNew.id)
+                return@mapIndexed articleNew.copy(
+                    keyWords = (articleNew.keyWords + articleDb.keyWords).distinct()
+                )
+            }
+            return@mapIndexed null
+        }.filterNotNull()
+        articleDao.update(articlesToSave)
     }
 
     override suspend fun article(articleId: Long): Result<ArticleEntity> {
