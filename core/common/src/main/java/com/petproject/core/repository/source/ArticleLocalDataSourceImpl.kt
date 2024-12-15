@@ -33,7 +33,7 @@ class ArticleLocalDataSourceImpl(
     }
 
     override fun observeArticles(keyword: String): Flow<List<ArticleEntity>> {
-        return articleDao.observeArticles()
+        return articleDao.observeArticles(keyword)
     }
 
     override suspend fun everything(keyword: String): Result<List<ArticleEntity>> {

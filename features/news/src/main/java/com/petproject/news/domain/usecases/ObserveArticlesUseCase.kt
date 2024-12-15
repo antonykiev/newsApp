@@ -13,7 +13,7 @@ import javax.inject.Inject
 class ObserveArticlesUseCase @Inject constructor(
     private val serverRepository: ArticleRepository,
 ) {
-    // transform result to Result
+
     suspend operator fun invoke(query: kotlin.String): Flow<List<NewsPresentation>> {
         return channelFlow {
             launch(Dispatchers.IO) {

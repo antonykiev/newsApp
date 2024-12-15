@@ -24,8 +24,8 @@ interface ArticleDao {
     @Query("SELECT * FROM articles")
     suspend fun getAllArticles(): List<ArticleEntity>
 
-    @Query("SELECT * FROM articles")
-    fun observeArticles(): Flow<List<ArticleEntity>>
+    @Query("SELECT * FROM articles WHERE keywords LIKE '%' || :keyword || '%'")
+    fun observeArticles(keyword: String): Flow<List<ArticleEntity>>
 
     @Delete
     suspend fun deleteUser(user: ArticleEntity)
