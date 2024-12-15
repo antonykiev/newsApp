@@ -1,5 +1,6 @@
 package com.petproject.news.domain.usecases
 
+import com.petproject.core.data.Query
 import com.petproject.core.presentation.BaseScreenStateUseCase
 import com.petproject.news.ui.screenstate.ListState
 import com.petproject.news.ui.screenstate.ScreenState
@@ -13,7 +14,8 @@ class ScreenStateUseCase @Inject constructor() : BaseScreenStateUseCase<ScreenSt
         return ScreenState(
             searchBarState = SearchBarState(
                 query = DEFAULT_QUERY,
-                active = DEFAULT_ACTIVE
+                active = DEFAULT_ACTIVE,
+                queryHistory = DEFAULT_QUERY_HISTORY
             ),
             listState = ListState.Initial
         )
@@ -47,8 +49,13 @@ class ScreenStateUseCase @Inject constructor() : BaseScreenStateUseCase<ScreenSt
         }
     }
 
+    fun updateQueryHistory(queryHistory: List<Query>) {
+
+    }
+
     companion object Constants {
         private const val DEFAULT_QUERY = ""
         private const val DEFAULT_ACTIVE = false
+        private val DEFAULT_QUERY_HISTORY = emptyList<Query>()
     }
 }

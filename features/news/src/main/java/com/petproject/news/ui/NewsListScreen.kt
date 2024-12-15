@@ -1,6 +1,5 @@
 package com.petproject.news.ui
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,10 +17,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,10 +37,6 @@ fun NewsListScreen(
     onNewsClick: (articleId: Long) -> Unit,
 ) {
     val viewModel = hiltViewModel<NewsViewModel>()
-
-    LaunchedEffect(Unit) {
-        viewModel.loadInitialState()
-    }
 
     val screenState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -138,7 +131,6 @@ fun LoadedStateScreen(
             key = { _, it -> it.title }
         ) { index, item ->
             val modifier = Modifier.calculateModifier(index, innerPadding, state)
-
             NewsItem(
                 modifier = modifier,
                 item = item,
@@ -159,7 +151,11 @@ fun LoadingStateScreen(state: ListState.Loading) {
     }
 }
 
-private fun Modifier.calculateModifier(index: Int, innerPadding: PaddingValues, state: ListState.Loaded): Modifier {
+private fun Modifier.calculateModifier(
+    index: Int,
+    innerPadding: PaddingValues,
+    state: ListState.Loaded,
+): Modifier {
     return when (index) {
         0 -> padding(top = innerPadding.calculateTopPadding())
         state.news.lastIndex -> padding(bottom = 16.dp)

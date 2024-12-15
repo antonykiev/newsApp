@@ -1,5 +1,6 @@
 package com.petproject.news.ui.screenstate
 
+import com.petproject.core.data.Query
 import com.petproject.news.domain.data.NewsPresentation
 
 
@@ -25,6 +26,7 @@ sealed interface ListState {
 }
 
 data class SearchBarState(
+    val queryHistory: List<Query>,
     val query: String,
     val active: Boolean,
 )
