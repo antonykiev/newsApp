@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.pet.database.entity.QueryEntity
 
 @Dao
@@ -20,6 +21,10 @@ interface QueryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertQuery(query: QueryEntity)
+
+    @Update
+    suspend fun updateQuery(user: QueryEntity)
+
 
     suspend fun saveQuery(query: QueryEntity) {
         if (getRowCount() >= 15) {

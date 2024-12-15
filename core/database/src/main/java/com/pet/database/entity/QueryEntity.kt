@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class QueryEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val query: String,
+    val text: String,
     val timestamp: Long = System.currentTimeMillis()
 )

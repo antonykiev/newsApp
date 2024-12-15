@@ -4,6 +4,7 @@ import com.pet.database.entity.QueryEntity
 import com.pet.database.source.QueryLocalDataSource
 import com.petproject.core.data.Query
 import com.petproject.core.mappers.QueryEntityToQueryMapper
+import com.petproject.core.mappers.QueryToQueryEntityMapper
 
 class QueryRepositoryImpl (
     private val queryLocalDataSource: QueryLocalDataSource
@@ -15,7 +16,12 @@ class QueryRepositoryImpl (
     }
 
     override suspend fun saveQuery(query: String) {
-        val queryEntity = QueryEntity(query = query)
+        val queryEntity = QueryEntity(text = query)
         queryLocalDataSource.saveQuery(queryEntity)
+    }
+
+    override suspend fun updateQuery(query: Query) {
+        val queryEntity = QueryToQueryEntityMapper.queryEntity(query)
+        queryLocalDataSource.updateQuery(queryEntity)
     }
 }

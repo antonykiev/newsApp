@@ -15,4 +15,8 @@ class QueryLocalDataSourceImpl(
     override suspend fun saveQuery(query: QueryEntity) {
         queryDao.saveQuery(query)
     }
+
+    override suspend fun updateQuery(query: QueryEntity) {
+        queryDao.updateQuery(query)
+    }
 }

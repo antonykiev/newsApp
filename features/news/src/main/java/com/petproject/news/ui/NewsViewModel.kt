@@ -7,6 +7,7 @@ import com.petproject.news.domain.usecases.AddQueryUseCase
 import com.petproject.news.domain.usecases.ObserveArticlesUseCase
 import com.petproject.news.domain.usecases.QueryHistoryUseCase
 import com.petproject.news.domain.usecases.ScreenStateUseCase
+import com.petproject.news.domain.usecases.UpdateQueryUseCase
 import com.petproject.news.ui.screenstate.ListState
 import com.petproject.news.ui.screenstate.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,7 @@ class NewsViewModel @Inject constructor(
     private val observeArticlesUseCase: ObserveArticlesUseCase,
     private val queryHistoryUseCase: QueryHistoryUseCase,
     private val addQueryUseCase: AddQueryUseCase,
+    private val updateQueryUseCase: UpdateQueryUseCase,
 ) : ViewModel() {
 
     val state: StateFlow<ScreenState> = screenStateUseCase.observeScreenState()
@@ -34,9 +36,7 @@ class NewsViewModel @Inject constructor(
             addQueryUseCase(query)
         }
         viewModelScope.launch {
-            observeArticlesUseCase(query)
-                .map(ListState::Loaded)
-                .collect(screenStateUseCase::updateListState)
+            observeArticles(query)
         }
         screenStateUseCase.updateActiveState(false)
     }
@@ -52,7 +52,19 @@ class NewsViewModel @Inject constructor(
     }
 
     fun onQuerySelected(query: Query) {
-        onQueryChange(query.text)
-        onSearch(query.text)
+        screenStateUseCase.onQueryChange(query.text)
+        viewModelScope.launch {
+            updateQueryUseCase(query)
+        }
+        viewModelScope.launch {
+            observeArticles(query.text)
+        }
+        screenStateUseCase.updateActiveState(false)
+    }
+
+    private suspend fun observeArticles(query: String) {
+        observeArticlesUseCase(query)
+            .map(ListState::Loaded)
+            .collect(screenStateUseCase::updateListState)
     }
 }

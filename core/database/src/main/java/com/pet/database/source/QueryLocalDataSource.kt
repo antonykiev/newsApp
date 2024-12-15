@@ -5,4 +5,5 @@ import com.pet.database.entity.QueryEntity
 interface QueryLocalDataSource {
     suspend fun getRecentQueries(): List<QueryEntity>
     suspend fun saveQuery(query: QueryEntity)
+    suspend fun updateQuery(query: QueryEntity)
 }
