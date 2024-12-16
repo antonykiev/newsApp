@@ -1,4 +1,5 @@
 import dependency.Hilt
+import dependency.HiltTesting
 import dependency.Retrofit
 import dependency.Test
 
@@ -43,7 +44,17 @@ kapt {
 }
 
 dependencies {
+    testImplementation(libs.hilt.android.testing)
     Hilt()
     Retrofit()
     Test()
+    HiltTesting()
+
+    testAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.51.1")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.51.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+
+    testImplementation(libs.mockwebserver)
 }

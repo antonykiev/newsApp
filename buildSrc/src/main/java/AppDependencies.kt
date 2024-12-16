@@ -26,6 +26,8 @@ object AppDependencies {
         const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:${hilt}"
         const val androidxHiltCompiler = "androidx.hilt:hilt-compiler:${hiltAndroidX}"
         const val androidxHiltLifecycleViewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:${androidxHiltLifecycleViewmodelVersion}"
+
+        const val hiltTesting = "com.google.dagger:hilt-android-testing:${hilt}"
     }
 
     object Compose {
@@ -72,6 +74,8 @@ object AppDependencies {
     }
 
     object Test {
+        private const val mockwebserverVersion = "4.11.0"
+
         const val androidxJunit = "androidx.test.ext:junit:${Versions.junitVersion}"
         const val junit = "junit:junit:${Versions.junit}"
         const val androidxUiTestManifest = "androidx.compose.ui:ui-test-manifest"
@@ -79,6 +83,8 @@ object AppDependencies {
         const val androidxUiTestJunit4 = "androidx.compose.ui:ui-test-junit4"
         const val androidxEspressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCore}"
         const val material = "com.google.android.material:material:${Versions.material}"
+
+        const val mockwebserver = "com.squareup.okhttp3:mockwebserver:${mockwebserverVersion}"
     }
 
 }
